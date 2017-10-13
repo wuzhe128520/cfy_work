@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>测试读取txt文件</title>
+	<style>
+		.progress {
+			width: 100%;
+			height: 50px;
+			line-height: 50px;
+			display: none;
+		}
+		.progress-bar {
+			width: 0;
+			height: 100%;
+			line-height: inherit;
+			text-align: center;
+			background: red;
+		}
+	</style>
+</head>
+<body>
+<input type="file" id="file">
+<div class="progress" id="progress">
+	<div id="percent" class="progress-bar">0%</div>
+</div>
+<script src="assert/js/readTxt.js"></script>
+<script>
+	window.onload = function() {
+		file.onchange = function() {
+			var file = this.files[0]
+			readTxt(
+					file,
+					function(data){
+						console.log('读取txt成功……');
+						console.log(data);
+					},
+					function(){
+						console.log('开始读取咯……');
+						progress.style.display = 'block';
+					},
+					true
+				);
+		}
+	}
+</script>
+</body>
+</html>

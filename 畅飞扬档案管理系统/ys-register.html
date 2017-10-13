@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>英山档案局智慧档案管理综合监控平台-注册</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css"/>
+	<link rel="stylesheet" href="css/ys-register.css"/>
+</head>
+<body>
+	<main>
+		<div class="ys-login-wrap">
+			<div class="ys-login ys-register">
+<!--				<h1 class="login-title">英山档案局智慧档案综合管控平台</h1>-->
+				<form action="/cfy/user/regist.do" method='post'>
+					<div class="text-center">
+						<h2 class="register-title">用户注册</h2>
+					</div>
+					<div class="form-group">
+						<input id="index-inp-un" name="userName" class="form-control" placeholder="帐号" />
+					</div>
+					<div class="form-group">
+						<input id="pwd" name="userPassword" type="password" class="form-control" placeholder="密码"/>
+					</div>
+
+					<div class="form-group">
+						<input id="phone" name="telephone" class="form-control" placeholder="手机号"/>
+					</div>
+					<div class="form-group">
+						<input id="email" type="email" name="Email" class="form-control" placeholder="邮箱"/>
+					</div>
+					<div class="form-group">
+						<select name="cardType" class="form-control">
+							<option id="s1"  value="shenfenzheng">身份证</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<input id="index-inp-pd" name="cardNumber" class="form-control" placeholder="证件号码"/>
+					</div>
+					<div class="form-group agree">
+						<input type="checkbox">我以阅读并接受用户协议
+					</div>
+					<div class="form-group">
+						<button id="index-btn-sub" class="form-control btn btn-info" type="submit">注&nbsp;册</button>
+					</div>
+					<div class="form-group">
+						<a href="/cfy/forward/login.do" class="pull-right">返回登录</a>
+					</div>
+				</form>
+
+				<div class="company-info">
+					<img src="img/LOGO.png" alt="畅飞扬">
+					<span>畅飞扬信息系统有限公司</span>
+				</div>
+			</div>
+		</div>
+	</main>
+	<footer>
+
+	</footer>
+</body>
+</html>

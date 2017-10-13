@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>h5文件读取</title>
+</head>
+<body>
+<form action="">
+    <input type="file" id="file"/>
+    <input type="button" id="subBtn" value="提交"/>
+</form>
+<script src="assert/js/ejs.min.js"></script>
+<script type="text/javascript" src="assert/js/jquery-3.2.1.min.js"></script>
+<script type="text/template" id="tmpl">
+
+	<table>
+		<$
+			var data = results;
+			for(var i = 0, length = data.length; i < length; i ++){
+		        if(i === 0) {
+		$>
+			<tr>
+				<th></th>
+			</tr>
+		<$}$>
+
+		<tr>
+			<td></td>
+		</tr>
+	</table>
+
+</script>
+<script>
+			function render(t, e, o) {
+				var n = $("#" + t).html(),
+					a = "";
+				ejs.delimiter = "$",
+					a = ejs.render(n, e),
+					"string" === typeof o? $("#" + o).html("").append(a) : o instanceof $ && o.html("").append(a)
+			}
+    /*
+    *  filereader三种状态：
+    *      0：empty,没有文件被load，为空
+    *      1：loading，文件正在被加载
+    *      2：done，读取请求完成
+    *   filereader对象可以异步读取计算机上的文件(或原始数据缓冲区)的内容，使用file或blob对象
+    *   制定要读取的文件或数据。
+    * */
+
+    $("#subBtn").on('click',function(){
+        console.log($("#file").files);
+    });
+    var readData = '';
+    $("#file").on('change',function(){
+	    var filetoread=this.files;
+        var reader = new FileReader();
+
+        reader.readAsText(filetoread[0],"gb2312");
+
+        //读取中触发(读取进度)
+        reader.onprogress = function() {
+
+        };
+
+        //文件成功读取触发
+        reader.onload = function(){
+	        readData = this.result;
+            //document.write(this.result);
+	        //匹配换行符
+	        var  expRn = /\r\n/g,
+		        expSpace = /\s/,
+                     arr = null;
+	        //分析行数据;
+	        console.log(readData);
+	        console.log(expRn.exec(readData));
+	        var rows = [];
+	/*        while ((arr = expRn.exec(readData)) != null){
+	        	console.log(arr);
+
+	        	//index是匹配到的字符串索引
+	        	rows.push(arr.index);
+
+	        }*/
+	        var rowsAry = readData.split(expRn);
+	        console.log(rowsAry);
+	        //属性
+	        var attrs = rowsAry[0].split(expSpace).filter(function(item){
+	        	        return item != "";
+		        }),
+		        //values
+		        vals = [];
+	        for(var i = 1,length = rowsAry.length; i < length; i++ ){
+		        var row = rowsAry[i];
+		        var valAry = row.split(expSpace).filter(function(item){
+		        	return item != "";
+		        });
+		        vals.push(valAry);
+	        }
+	        var ary = [];
+	        /*for(var j = 0, l = attrs.length; j < l; j++) {
+				json[attrs[i]] =
+			}*/
+	        function a (val) {
+		        var json = {};
+	        	debugger;
+		        for(var k = 0, size = val.length; k < size; k++) {
+			        json[attrs[k]] = val[k];
+		        }
+		        return json;
+	        }
+	        for(var j = 0, l = vals.length; j < l; j++) {
+	        	debugger;
+		        var val = vals[j];
+		        var data = a(val);
+		        ary.push(data);
+	        }
+
+	        //输出解析后的json
+	        console.log("输出解析后的数组：");
+	        console.log(ary);
+	        //分析列数据
+        };
+
+        //文件读取中断触发
+        reader.onabort = function() {
+            console.log('读取中断……');
+        };
+
+        //文件读取出错
+        reader.onerror = function() {
+            console.log('读取错误……');
+        };
+
+        //文件读取完成后调用，不管读取成功还是失败
+        reader.onloadend = function() {
+            console.log('读取完成(不管成功还是失败)……');
+        };
+    });
+
+
+
+</script>
+</body>
+</html>

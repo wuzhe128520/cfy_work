@@ -1,0 +1,143 @@
+/*
+* @Author: Marte
+* @Date:   2017-07-11 11:38:24
+* @Last Modified by:   Marte
+* @Last Modified time: 2017-09-25 17:10:31
+*/
+html,body{
+  font-family:"微软雅黑";
+  font-size:15px;
+ }
+ .text-white{
+    color: white;
+ }
+ .xianshi{
+    display: block;
+ }
+.yincang{
+    display:none;
+}
+.nopadding{
+    padding: 0;
+}
+.nopaddingl{
+    padding-left: 0;
+}
+.nopaddingr{
+    padding-right: 0;
+}
+.tabOperA{
+
+  font-size:1rem;
+}
+
+.tabOperACk{
+
+}
+
+.tabOperABj{
+
+}
+.tabOperASc{
+  color:red;
+}
+
+#adGlQzTab{
+  font-size:0.9rem;
+}
+#adGlAjTab{
+  font-size:0.9rem;
+}
+
+#indexFoLog{
+  width:500px;
+  height:500px;
+  position:absolute;
+  top:30%;
+  left:38%;
+}
+
+.modal-header{
+        color:#ffffff;
+      }
+      .form-horizontal .control-label{
+        text-align:left;
+        font-weight:500;
+        font-size:0.95rem;
+        padding-right:0;
+      }
+      .btn-self1{
+        color:#62a8ea;background-color:#fff;border-color:#62a8ea;
+      }
+      .btn-self1.focus,.btn-self1:focus{
+        color:#62a8ea;background-color:#e6e6e6;border-color:#62a8ea;
+        }
+      .btn-self1:hover{
+          color:#62a8ea;background-color:#e6e6e6;border-color:#62a8ea;
+        }
+     
+
+
+hr{
+      border-top:1px solid #807979;
+}
+
+
+
+
+
+
+
+
+
+
+img {
+  max-width: 64%; /* This rule is very important, please do not ignore this! */
+  max-height: 96%;
+}
+
+
+      .xinzengformrow{
+        background: #f5f8f3;
+        border:1px solid lightgrey;
+        border-right:0px;
+        border-bottom:0;
+      }
+
+      .xinzenglabel{
+        height:50px;
+        line-height:50px;
+        margin-bottom: 0;
+      }
+      .xinzenginput{
+        background: #ffffff;
+        height:50px;
+        border-left:1px solid lightgrey;
+        border-right:1px solid lightgrey;
+        padding-top:8px;
+      }
+.modal-dialog{
+    width:60%;
+
+}
+#adGlJnCkTpMod{
+  width:100%;
+}
+
+#adGlJnCkTpDiv{
+    width:50%;
+    height:80%;
+    margin:10% auto;
+}
+   #adGlQzCkForm,#adGlAjCkForm .control-label{
+        color:#b9c1c9;
+      }
+ #adGlQzCkForm,#adGlAjCkForm input{
+        border:0;
+        background:rgba(0,0,0,0);
+      }
+      
+      #adGlQzXgForm,#adGlAjXgForm input{
+        background:#fbfbf5;
+      }
+  

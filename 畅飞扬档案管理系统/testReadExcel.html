@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>测试最新读取excel</title>
+</head>
+<body>
+	<input type="file" id="files">
+	<!--<script src="assert/js/layer/layer.js"></script>-->
+	<script src="assert/js/jquery-3.2.1.min.js"></script>
+	<script src="assert/js/js-xlsx/shim.js"></script>
+	<script src="assert/js/js-xlsx/xlsx.full.min.js"></script>
+	<script src="assert/js/readExcel.js"></script>
+	<script>
+		$("#files").change(function( event ) {
+			var files = event.target.files;
+			readExcel(files[0], function(arrayData){
+					console.log(arrayData);
+			});
+		});
+	</script>
+</body>
+</html>

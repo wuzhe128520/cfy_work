@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>select2</title>
+	<!--<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/css/select2.min.css" rel="stylesheet" />-->
+	<link rel="stylesheet" href="assert/js/bootstrap/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="assert/js/select2/css/select2.min.css">
+	<link rel="stylesheet" href="assert/js/select2/css/select2-bootstrap.min.css">
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<h4>1、初始化</h4>
+			<pre>
+				<code>
+					$(function() {
+					$("select").select2();
+					});
+				</code>
+			</pre>
+			<h3><small>效果：</small></h3>
+			<select id="searchSelect" style="width: 300px;">
+				<option value="">set</option>
+				<option value="">wsf</option>
+				<option value="">wwws</option>
+				<option value="">zhe</option>
+				<option value="">zzz</option>
+				<option value="">rrrrr</option>
+			</select>
+			<h4>2、选择多个的select框</h4>
+			<p>html代码：</p>
+			<pre>
+				<code>
+					&lt;select class="js-example-basic-multipe" name="states[]" multiple="multiple"&gt;
+					&lt;option value="1"&gt;alibaba&lt;/option&gt;
+					&lt;option value="2"&gt;tecent&lt;/option&gt;
+					&lt;option value="3"&gt;baidu&lt;/option&gt;
+					&lt;option value="4"&gt;sina&lt;/option&gt;
+					&lt;option value="5"&gt;huawei&lt;/option&gt;
+
+				</code>
+			</pre>
+			<p>js代码：</p>
+			<pre>
+				<code>
+					$(".js-example-basic-multipe").select2();
+				</code>
+			</pre>
+			<h3><small>效果：</small></h3>
+			<div id="wrapper" style="position: relative;">
+				<select class="js-example-basic-multiple" style="width: 300px;" multiple="multiple">
+					<option value="">set</option>
+					<option value="">wsf</option>
+					<option value="">wwws</option>
+					<option value="">zhe</option>
+					<option value="">zzz</option>
+					<option value="">rrrrr</option>
+				</select>
+			</div>
+			<h4>3、与bootstrap的模态框(modal)组合产生的问题</h4>
+			<p>html代码：</p>
+			<pre>
+				<code>
+					&lt;div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"&gt;
+					&lt;select id="mySelect2"&gt;
+					&lt;option value="3"&gt;baidu&lt;/option&gt;
+					&lt;option value="4"&gt;sina&lt;/option&gt;
+					&lt;option value="5"&gt;huawei&lt;/option&gt;
+					&lt;/select&gt;
+				</code>
+			</pre>
+			<p>js代码：</p>
+			<pre>
+				<code>
+					$("mySelect2").select2({
+					dropdownParent: $('#myModal')
+					});
+				</code>
+			</pre>
+			<h3><small>效果：</small></h3>
+			<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button class="close" data-dismiss="modal">
+								<span>&times;</span>
+							</button>
+							<h4 class="modal-title">bootstrap与select2的弹框</h4>
+						</div>
+						<div class="modal-body">
+							<div class="" style="position: relative;">
+								<select name="" id="mySelect2" style="width: 300px;">
+									<option value="">01wwuzhe</option>
+									<option value="">02wwuzhe</option>
+									<option value="">03wwuzhe</option>
+									<option value="">04wwuzhe</option>
+									<option value="">05wwuzhe</option>
+									<option value="">06wwuzhe</option>
+								</select>
+
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button class="btn btn-default" data-dismiss="modal">关闭</button>
+							<button class="btn btn-primary">保存</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<button class="btn btn-primary" data-toggle="modal" data-target="#myModal" id="mdBtn">弹框</button>
+			<h4>4、设置百分比宽度</h4>
+			<p>html代码：</p>
+			<pre>
+				<code>
+					&lt;select name="" class="js-example-responsive" style="width: 100%" id=""&gt;&lt;/select&gt;
+				</code>
+			</pre>
+			<p>js代码：</p>
+			<pre>
+				<code>
+					$(".js-example-responsive").select2({
+						width: 'resolve'
+					});
+				</code>
+			</pre>
+			<h3>
+				<small>效果：</small>
+			</h3>
+			<div class="container">
+				<div class="row">
+					<form action="" class="form-group">
+						<table class="table table-responsive">
+							<tr>
+								<td>
+									<select name=""  class="js-example-responsive" style="width: 100%">
+										<option value="">wz001</option>
+										<option value="">wz002</option>
+										<option value="">wz003</option>
+										<option value="">wz004</option>
+										<option value="">wz005</option>
+										<option value="">wz006</option>
+										<option value="">wz007</option>
+										<option value="">wz008</option>
+										<option value="">wz009</option>
+										<option value="">wz010</option>
+										<option value="">wz011</option>
+										<option value="">wz012</option>
+										<option value="">wz013</option>
+										<option value="">wz014</option>
+										<option value="">wz015</option>
+										<option value="">wz016</option>
+										<option value="">wz017</option>
+										<option value="">wz018</option>
+										<option value="">wz019</option>
+										<option value="">wz020</option>
+										<option value="">wz021</option>
+										<option value="">wz022</option>
+										<option value="">wz023</option>
+										<option value="">wz024</option>
+										<option value="">wz025</option>
+										<option value="">wz026</option>
+										<option value="">wz027</option>
+										<option value="">wz028</option>
+										<option value="">wz029</option>
+										<option value="">wz030</option>
+										<option value="">wz031</option>
+										<option value="">wz032</option>
+										<option value="">wz033</option>
+										<option value="">wz034</option>
+										<option value="">wz035</option>
+										<option value="">wz036</option>
+										<option value="">wz037</option>
+										<option value="">wz038</option>
+										<option value="">wz039</option>
+										<option value="">wz040</option>
+										<option value="">wz041</option>
+										<option value="">wz042</option>
+										<option value="">wz043</option>
+										<option value="">wz044</option>
+										<option value="">wz045</option>
+										<option value="">wz046</option>
+										<option value="">wz047</option>
+										<option value="">wz048</option>
+										<option value="">wz049</option>
+										<option value="">wz050</option>
+										<option value="">wz051</option>
+										<option value="">wz052</option>
+										<option value="">wz053</option>
+										<option value="">wz054</option>
+										<option value="">wz055</option>
+										<option value="">wz056</option>
+										<option value="">wz057</option>
+										<option value="">wz058</option>
+										<option value="">wz059</option>
+										<option value="">wz060</option>
+										<option value="">wz061</option>
+										<option value="">wz062</option>
+										<option value="">wz063</option>
+										<option value="">wz064</option>
+										<option value="">wz065</option>
+										<option value="">wz066</option>
+										<option value="">wz067</option>
+										<option value="">wz068</option>
+										<option value="">wz069</option>
+										<option value="">wz070</option>
+										<option value="">wz071</option>
+										<option value="">wz072</option>
+										<option value="">wz073</option>
+										<option value="">wz074</option>
+										<option value="">wz075</option>
+										<option value="">wz076</option>
+										<option value="">wz077</option>
+										<option value="">wz078</option>
+										<option value="">wz079</option>
+										<option value="">wz080</option>
+										<option value="">wz081</option>
+										<option value="">wz082</option>
+										<option value="">wz083</option>
+										<option value="">wz084</option>
+										<option value="">wz085</option>
+										<option value="">wz086</option>
+										<option value="">wz087</option>
+										<option value="">wz088</option>
+										<option value="">wz089</option>
+										<option value="">wz090</option>
+										<option value="">wz091</option>
+										<option value="">wz092</option>
+										<option value="">wz093</option>
+										<option value="">wz094</option>
+										<option value="">wz095</option>
+										<option value="">wz096</option>
+										<option value="">wz097</option>
+										<option value="">wz098</option>
+										<option value="">wz099</option>
+										<option value="">wz100</option>
+									</select>
+								</td>
+								<td>
+									<select name=""  class="js-example-responsive" style="width: 100%">
+										<option value="">wc001</option>
+										<option value="">wc002</option>
+									</select>
+								</td>
+								<td>
+									<select name=""  class="js-example-responsive" style="width: 100%">
+										<option value="">wc001</option>
+										<option value="">wc002</option>
+									</select>
+								</td>
+								<td>
+									<select name=""  class="js-example-responsive" style="width: 100%">
+										<option value="">wc001</option>
+										<option value="">wc002</option>
+									</select>
+								</td>
+								<td>
+									<select name=""  class="js-example-responsive" style="width: 100%">
+										<option value="">wc001</option>
+										<option value="">wc002</option>
+									</select>
+								</td>
+								<td>
+									<select name="" id="" class="js-example-responsive" style="width: 100%">
+										<option value="">wc001</option>
+										<option value="">wc002</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td><select name="" class="js-example-responsive" style="width: 100%">
+									<option value="">wc001</option>
+									<option value="">wc002</option>
+								</select>
+								</td>
+								<td><select name="" class="js-example-responsive" style="width: 100%">
+									<option value="">wc001</option>
+									<option value="">wc002</option>
+								</select>
+								</td>
+								<td><select name="" class="js-example-responsive" style="width: 100%">
+									<option value="">wc001</option>
+									<option value="">wc002</option>
+								</select>
+								</td>
+								<td><select name="" class="js-example-responsive" style="width: 100%">
+									<option value="">wc001</option>
+									<option value="">wc002</option>
+								</select>
+								</td>
+								<td><select name="" class="js-example-responsive" style="width: 100%">
+									<option value="">wc001</option>
+									<option value="">wc002</option>
+								</select>
+								</td>
+								<td><select name="" class="js-example-responsive" style="width: 100%">
+									<option value="">wc001</option>
+									<option value="">wc002</option>
+								</select>
+								</td>
+							</tr>
+							<tr>
+								<td><select name="" class="js-example-responsive" style="width: 100%">
+									<option value="">wc001</option>
+									<option value="">wc002</option>
+								</select>
+								</td>
+								<td><select name="" class="js-example-responsive" style="width: 100%">
+									<option value="">wc001</option>
+									<option value="">wc002</option>
+								</select>
+								</td>
+								<td><select name="" class="js-example-responsive" style="width: 100%">
+									<option value="">wc001</option>
+									<option value="">wc002</option>
+								</select>
+								</td>
+								<td><select name="" class="js-example-responsive" style="width: 100%">
+									<option value="">wc001</option>
+									<option value="">wc002</option>
+								</select>
+								</td>
+								<td><select name="" class="js-example-responsive" style="width: 100%">
+									<option value="">wc001</option>
+									<option value="">wc002</option>
+								</select>
+								</td>
+								<td>
+									<select name="" class="js-example-responsive" style="width: 100%">
+									<option value="">wc001</option>
+									<option value="">wc002</option>
+								</select>
+								</td>
+							</tr>
+						</table>
+					</form>
+				</div>
+			</div>
+			<h4>5、select选择事件</h4>
+			<p>js代码：</p>
+			<pre>
+				<code>
+				    var select = $(".js-example-select").select2({
+						width: "resolve"
+					});
+					select.on('select2:select', function (e) {
+						var data = e.params.data; //获取当前点击的option对象，里面包含value、text等
+						console.log(data);
+					});
+				</code>
+			</pre>
+			<select name="" class="js-example-select" style="width: 300px;">
+				<option value="">jn01</option>
+				<option value="">jn02</option>
+				<option value="">jn03</option>
+				<option value="">jn04</option>
+				<option value="">jn05</option>
+				<option value="">jn06</option>
+			</select>
+			<h4>6、打开事件和关闭事件(两个事件合并起来可以当做click事件)</h4>
+			<select name="" class="js-select-click" style="width: 300px;">
+				<option value="">jn01</option>
+				<option value="">jn02</option>
+				<option value="">jn03</option>
+				<option value="">jn04</option>
+				<option value="">jn05</option>
+				<option value="">jn06</option>
+			</select>
+			<h4>7、自动解析数组添加option</h4>
+			<select name="" class="js-select-parse-array" style="width: 300px;"></select>
+			<h4>8、手动触发事件</h4>
+			<select name="" class="js-select-focus" id="selectTrigger" style="width: 300px;">
+				<option value="">jn01</option>
+				<option value="">jn02</option>
+				<option value="">jn03</option>
+				<option value="">jn04</option>
+				<option value="">jn05</option>
+				<option value="">jn06</option>
+			</select>
+			<h4>9、使用ajax获取option数据</h4>
+			<select class="js-data-example-ajax"></select>
+		</div>
+	</div>
+	<script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+	<script src="assert/js/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="assert/js/select2/js/select2.full.min.js"></script>
+	<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script>-->
+	<script>
+		$(function() {
+			$("#searchSelect").select2();
+			$(".js-example-basic-multiple").select2();
+			$('#mdBtn').on("click",function(){
+				$("#mySelect2").select2({
+					dropdownParent: $("#myModal")
+				});
+			});
+			$(".js-example-responsive").select2({
+				width: 'resolve'
+			});
+			var select = $(".js-example-select").select2({
+				width: "resolve"
+			});
+			console.log(select);
+
+			//change事件监听
+			select.on('select2:select', function (e) {
+				var data = e.params.data; //获取当前点击的option对象，里面包含value、text等
+				console.log(data);
+			});
+			var selectClick = $(".js-select-click").select2({
+				width: "resolve"
+			});
+
+			//打开事件
+			selectClick.on("select2:open", function(e) {
+				console.log("打开了……");
+			});
+
+			//关闭事件
+			selectClick.on("select2:close", function(e){
+				console.log("关闭了……");
+			});
+
+			var dataOnTrigger = {
+				"id": 1,
+				"text": "Tyto alba",
+				"genus": "Tyto",
+				"species": "alba"
+			};
+
+			var selectTrigger = $("#selectTrigger").select2();
+			selectTrigger.on('select2:select', function(e) {
+				console.log("trigger手动触发事件：");
+				console.log(e.params.data);
+			});
+			selectTrigger.trigger({
+				type: 'select2:select',
+				params: {
+					data: dataOnTrigger
+				}
+			});
+
+			//自定义数据
+			var arrayData = [
+				{
+					id: 0,
+					text: 'enhancement',
+					value: 100
+				},
+				{
+					id: 1,
+					text: 'bug',
+					value: 200
+				},
+				{
+					id: 2,
+					text: 'duplicate',
+					value: 300
+				},
+				{
+					id: 3,
+					text: 'invalid',
+					value: 400
+				},
+				{
+					id: 4,
+					text: 'wontfix',
+					value: 500
+				}
+			];
+			var arraySelect = $(".js-select-parse-array").select2({data: arrayData});
+			arraySelect.on("select2:select", function(e) {
+				console.log(e.params.data);
+			});
+
+			//ajax加载远程数据
+			$('.js-data-example-ajax').select2({
+				ajax: {
+					url: 'https://api.github.com/search/repositories',
+					dataType: 'json'
+					// Additional AJAX parameters go here; see the end of this chapter for the full code of this example
+				}
+			});
+
+		});
+	</script>
+</body>
+</html>
