@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>echarts双曲线图</title>
+</head>
+<body>
+	<div id="main" style="width: 600px;height: 400px">
+
+	</div>
+	<script src="echarts/echarts.js"></script>
+	<script>
+		var myChart = echarts.init(document.getElementById('main'));
+
+
+		var colors = ['#5793f3', '#d14a61', '#675bba'];
+
+
+		option = {
+			color: colors,
+
+			tooltip: {
+				trigger: 'none',
+				axisPointer: {
+					type: 'cross'
+				}
+			},
+			legend: {
+				data:['著录', '审核']
+			},
+			grid: {
+				top: 70,
+				bottom: 50
+			},
+			xAxis: [
+				{
+					type: 'category',
+					axisTick: {
+						alignWithLabel: true
+					},
+					axisLine: {
+						onZero: false,
+						lineStyle: {
+							color: colors[1]
+						}
+					},
+					axisPointer: {
+						label: {
+							formatter: function (params) {
+								return '著录  ' + params.value
+										+ (params.seriesData.length ? '：' + params.seriesData[0].data : '');
+							}
+						}
+					},
+					data: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"]
+				},
+				{
+					type: 'category',
+					axisTick: {
+						alignWithLabel: true
+					},
+					axisLine: {
+						onZero: false,
+						lineStyle: {
+							color: colors[0]
+						}
+					},
+					axisPointer: {
+						label: {
+							formatter: function (params) {
+								return '审核  ' + params.value
+										+ (params.seriesData.length ? '：' + params.seriesData[0].data : '');
+							}
+						}
+					},
+					data: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"]
+				}
+			],
+			yAxis: [
+				{
+					type: 'value',
+					min: 0,
+					max: 1500
+				}
+			],
+			series: [
+				{
+					name:'著录',
+					type:'line',
+					xAxisIndex: 1,
+					smooth: true,
+					data: [300, 600, 780, 1000, 800, 600, 450]
+				},
+				{
+					name:'审核',
+					type:'line',
+					smooth: true,
+					data: [450, 750, 850, 950, 800, 650, 250]
+				}
+			]
+		};
+
+		//使用刚指定的配置项和数据显示图标
+		myChart.setOption(option);
+	</script>
+</body>
+</html>

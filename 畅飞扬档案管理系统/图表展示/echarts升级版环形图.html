@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>echarts</title>
+</head>
+<body>
+	<div id="main" style="width: 600px;height: 400px">
+
+	</div>
+	<script src="echarts/echarts.js"></script>
+	<script>
+		var myChart = echarts.init(document.getElementById('main'));
+		var option = option = {
+			tooltip: {
+				trigger: 'item',
+				formatter: "{a} <br/>{b}: {c} ({d}%)"
+			},
+			legend: {
+				data:['卷内文件','归档文件']
+			},
+			calculable : true,
+			series: [
+				{
+					name:'访问来源',
+					type:'pie',
+					radius: ['50%', '70%'],
+					avoidLabelOverlap: false,
+					roseType : 'radius',
+					label: {
+						normal: {
+							show: false,
+							position: 'center'
+						},
+						emphasis: {
+							show: true,
+							textStyle: {
+								fontSize: '30',
+								fontWeight: 'bold'
+							}
+						}
+					},
+					labelLine: {
+						normal: {
+							show: false
+						}
+					},
+					data:[
+						{value:60, name:'卷内文件'},
+						{value:40, name:'归档文件'}
+					]
+				}
+			]
+		};
+
+		//使用刚指定的配置项和数据显示图标
+		myChart.setOption(option);
+	</script>
+</body>
+</html>
