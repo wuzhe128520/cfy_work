@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<script src="assert/js/jquery2.2.4.js"></script>
+</head>
+<body>
+	<canvas id="w" width="200" height="55"></canvas>
+<script>
+	validateCode("w",4);
+	function validateCode (t, e) {
+		function o(t, e) {
+			return Math.floor(Math.random() * (e - t) + t)
+		}
+		function n(t, e) {
+			return "rgb(" + o(t, e) + "," + o(t, e) + "," + o(t, e) + ")"
+		}
+		function a() {
+			ctx = u.get(0).getContext("2d"),
+				ctx.textBaseline = "bottom",
+				ctx.fillStyle = n(180, 240),
+				ctx.fillRect(0, 0, pic_width, pic_height),
+				m = r(ctx),
+				i(ctx),
+				l(ctx)
+		}
+		function r(t) {
+			for (var a = "",
+				     r = 0; r < e; r++) {
+				var i = (pic_width - 10) / e * r + 10,
+					l = o(pic_height / 2, pic_height),
+					c = o( - 45, 45),
+					u = s[o(0, p)],
+					a = a + u;
+				t.fillStyle = n(10, 100),
+					t.font = o(16, 40) + "px SimHei",
+					t.translate(i, l),
+					t.rotate(c * Math.PI / 180),
+					t.fillText(u, 0, 0),
+					t.rotate( - c * Math.PI / 180),
+					t.translate( - i, -l)
+			}
+			return a
+		}
+		function i(t) {
+			for (var a = 0; a < e; a++) t.strokeStyle = n(90, 180),
+				t.beginPath(),
+				t.moveTo(o(0, pic_width), o(0, pic_height)),
+				t.lineTo(o(0, pic_width), o(0, pic_height)),
+				t.stroke()
+		}
+		function l(t) {
+			for (var a = 0; a < 10 * e; a++) t.fillStyle = n(0, 255),
+				t.beginPath(),
+				t.arc(o(0, pic_width), o(0, pic_height), 1, 0, 2 * Math.PI),
+				t.fill()
+		}
+		function c(t) {
+			t.preventDefault(),
+				t.stopPropagation(),
+				a()
+		}
+		var u = $("#" + t),
+			s = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", 0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+			p = s.length,
+			m = "123";
+		return pic_width = u.width(),
+			pic_height = u.height(),
+			$(u).on("click", c).triggerHandler("click"),
+			{
+				getContent: function() {
+					return m.toLowerCase()
+				},
+				getNewCode: function() {
+					$(u).trigger("click")
+				}
+			}
+	}
+</script>
+</body>
+</html>

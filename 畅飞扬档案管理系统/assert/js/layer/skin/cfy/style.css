@@ -1,0 +1,21 @@
+body .layer-ext-cfy .layui-layer-title{
+    background: #62a8ea;
+    color: #ffffff;
+}
+body .layer-ext-cfy .layui-layer-btn{}
+body .layer-ext-cfy .layui-layer-btn a{
+    background-color: #62a8ea;
+    border-color: #62a8ea;
+}
+body .layer-ext-cfy .layui-layer-btn .layui-layer-btn1{
+    color: #62a8ea;
+    background-color: #fff;
+    border-color: #62a8ea;
+}
+body .layui-layer-setwin .layui-layer-close1 {
+    background-position: -82px -40px;
+    cursor: pointer;
+}
+body .layer-ext-cfy .layui-layer-ico {
+    background-image: url(icon.png);
+}

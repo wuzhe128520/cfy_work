@@ -14,9 +14,10 @@ var cfyLayer = {
 		if (t.btn && t.methods && comm.type("array" === t.btn) && (e.btn = t.btn, "array" === comm.type(t.methods))) for (var o = t.btn.length,
 			                                                                                                                  a = 0; a < o; a++) 0 == a ? e.yes = n[0] : e["btn" + (a + 1)] = n[a];
 		$.extend(e, t);
-		layer.config({
+
+		/*layer.config({
 			skin: 'layui-layer-lan'
-		});
+		});*/
 		return	layer.open(e)
 	},
 	alert: function(t, e, o) {
@@ -46,5 +47,12 @@ var cfyLayer = {
 						layer.photos(o)
 				}
 			}) : t.id && (o.photos = id, layer.photos(o))
+	},
+	init: function() {
+		layer.config({
+			extend: 'cfy/style.css', //加载您的扩展样式
+			skin: 'layer-ext-cfy'
+		});
 	}
 };
+cfyLayer.init();

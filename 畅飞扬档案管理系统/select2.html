@@ -418,7 +418,7 @@
 
 			//关闭事件
 			selectClick.on("select2:close", function(e){
-				console.log("关闭了……");
+				console.log(e.params.data);
 			});
 
 			var dataOnTrigger = {

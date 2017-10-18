@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>测试modal</title>
+	<link rel="stylesheet" href="assert/js/bootstrap/dist/css/bootstrap.min.css">
+	<style>
+		.required {
+			position: relative;
+			line-height: inherit;
+		}
+		.required:before {
+			content: "*";
+			color: red;
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			width: 12px;
+			height: 12px;
+			margin: auto 0 auto -20px;
+		}
+	</style>
+</head>
+<body>
+	<!-- 模态框（Modal）1 -->
+	<div class="modal fade" id="adGlJnCkMod" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog container-fluid">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+							aria-hidden="true">×</span></button>
+					<h3 class="modal-title text-center">新增</h3>
+				</div>
+				<div class="modal-body">
+					<div  class="row clearfix">
+						<form class="form-horizontal col-md-10 col-md-offset-1" role="form" id="adGlJnCkForm" style="border:1px solid #ffffff">
+							<div class="form-group">
+								<label class="col-md-2 control-label required">用户名:</label>
+								<div class="col-md-4">
+									<input  name="userName"  class="form-control">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-md-2 control-label required">密码:</label>
+								<div class="col-md-4">
+									<input  name="userPassword"  class="form-control">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-md-2 control-label required">角色:</label>
+								<div class="col-md-4">
+									<select name="userType" class="form-control">
+										<option value="">请选择</option>
+										<option value=""></option>
+										<option value=""></option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-md-2 control-label">姓名:</label>
+								<div class="col-md-4">
+									<input  name="fondsNum"  class="form-control">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-md-2 control-label">电话:</label>
+								<div class="col-md-4">
+									<input  name="telephone"  class="form-control">
+								</div>
+								<label class="col-md-2 control-label">邮箱:</label>
+								<div class="col-md-4">
+									<input  name="email"  class="form-control">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-md-2 control-label">备注:</label>
+								<div class="col-md-4 xinzenginput">
+									<input  name="fondsNum"  class="form-control">
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+				<div class="modal-footer text-center">
+					<button id="adGlJnCkTpBtn" type="button" class="btn btn-self1" data-toggle="modal" data-target="#adGlJnCkTpMod">确定</button>
+					<button id="adGlJnCkModXz" type="button" data-dismiss="modal" class="btn btn-self1">关闭</button>&nbsp;
+				</div>
+			</div>
+		</div>
+	</div>
+	<button id="" data-target="#adGlJnCkMod" data-toggle="modal">打开模态框</button>
+	<!-- /.modal -->
+	<script src="assert/js/jquery2.2.4.js"></script>
+	<script src="assert/js/bootstrap/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
