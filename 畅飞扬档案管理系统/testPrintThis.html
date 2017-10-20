@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>测试printThis打印插件</title>
+	<link rel="stylesheet" href="assert/js/bootstrap/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/print-form.css" media="print">
+</head>
+<body>
+	<h4>1、打印机单位</h4>
+	<p>
+		1cm = 37.8px;
+		1px = 0.0265cm;
+	</p>
+	<button data-target="#dialog" data-toggle="modal">打开弹框</button>
+	<script src="assert/js/jquery2.2.4.js"></script>
+	<script src="assert/js/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="assert/js/printThis/printThis.js"></script>
+	<div class="modal fade" tabindex="-1" role="dialog" id="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">测试打印</h4>
+				</div>
+				<div class="modal-body">
+					<h1>为什么打印没有样式呢？</h1>
+				</div>
+				<div class="modal-footer hidden-print">
+					<button type="button" class="btn btn-default hidden-print" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary hidden-print" id="print-btn">打印</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+	<script>
+		$(function(){
+			$('#dialog').on('shown.bs.modal', function() {
+				var $printTarget = $(this);
+ 				//$(this).printThis();
+				$('#print-btn').off("click.print").on('click.print', function() {
+					handlePrint($printTarget);
+				});
+			});
+
+			function handlePrint($printTarget) {
+				$printTarget.printThis();
+			}
+		});
+	</script>
+</body>
+</html>

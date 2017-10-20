@@ -11,12 +11,20 @@
 	<script src="../echarts/echarts.js"></script>
 	<script>
 		var myChart = echarts.init(document.getElementById('main'));
-		var option = option = {
+		var option = {
+			//提示框组件
 			tooltip: {
-				trigger: 'item',
-				formatter: "{a} <br/>{b}: {c} ({d}%)"
+				trigger: 'item', //数据项图形触发，主要在散点图，饼图等无类目轴的图表中使用
+				formatter: "{a} <br/>{b}: {c} ({d}%)" //提示框浮层内容格式器，支持字符串模板和回调函数
 			},
 			legend: {
+				/*图例的数据数组。
+				* 数组项通常为一个字符串、每一项代表一个系列的
+				* name(如果是饼图，也可以是饼图单个数据的name)
+				* 图例组件会自动根据对应系列的图形标记(symbol)来绘制自己的颜色和标记、
+				* 特殊字符串''(空字符串)或者'\n'(换行字符串)用于图例的换行
+				*
+				* */
 				data:['卷内文件','归档文件']
 			},
 			calculable : true,
