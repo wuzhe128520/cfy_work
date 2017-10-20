@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>轮播图(图片查看器)</title>
+	<link rel="stylesheet" href="assert/js/pgw-slider/pgwslider.css">
+</head>
+<body>
+	<ul class="pgwSlider">
+		<li><img src="img/1.jpg" alt="第一张照片" data-description="去武大看樱花"></li>
+		<li><img src="img/2.jpg" alt="第二张照片" data-description="去白云山爬山" ></li>
+		<li>
+			<img src="img/3.jpg" alt="第三张照片" data-description="去深圳看世界之窗">
+			<span>第三张照片</span>
+		</li>
+		<li>
+			<a href="http://www.nyc.gov" target="_blank">
+				<img src="img/4.jpg" alt="天安门"  data-description="去北京看天安门">
+				<span>第四张照片</span>
+			</a>
+		</li>
+	</ul>
+	<script src="assert/js/jquery-3.2.1.min.js"></script>
+	<script src="assert/js/pgw-slider/pgwslider.min.js"></script>
+	<script>
+		$(document).ready(function() {
+			$('.pgwSlider').pgwSlider({
+				autoSlide: false, //禁用自动轮播
+				displayControls: true, //显示左右箭头
+				maxHeight: 500
+
+			});
+		});
+	</script>
+</body>
+</html>
