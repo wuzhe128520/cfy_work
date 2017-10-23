@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>两字符串相减</title>
+</head>
+<body>
+	<script src="assert/js/moment/moment.min.js"></script>
+	<script src="assert/js/timeMinusArray.js"></script>
+	<script src="assert/js/randomNum.js"></script>
+	<script>
+		/**
+		 * 需求，根据传入的两个时间字符串，返回他们之间所有的年份和月份组成的一个数组
+		 * @param timeStrOne
+		 * @param timeStrTwo
+		 */
+		function getTimeMinusArray(timeStrOne, timeStrTwo) {
+
+			var momentTimeOne = moment(timeStrOne.toString()),
+			    momentTimeTwo = moment(timeStrTwo.toString()),
+
+				//开始年份
+				beginYear = momentTimeOne.year(),
+
+				//开始月份
+				beginMonth = momentTimeOne.month() + 1,
+
+				//结束年份
+				endYear = momentTimeTwo.year(),
+
+				//结束月份
+				endMonth = momentTimeTwo.month() + 1,
+
+				timeMonthAry = [];
+
+				for( var i = beginYear; i<= endYear; i++) {
+
+					var begin = 1,
+						end =12;
+
+					if(i === beginYear) {
+						begin = beginMonth;
+					}
+
+					if(i === endYear) {
+						end = endMonth;
+					}
+
+					for(var j = begin; j <= end; j++) {
+						timeMonthAry.push(parseInt((i+String(j < 10?'0' + j: j)), 10));
+					}
+
+				}
+				console.log(timeMonthAry);
+				return timeMonthAry;
+		}
+		getTimeMinusArray(20131001, 20150612);
+		console.log(moment('20171023'));
+		console.log(randomNum(0, 10));
+	</script>
+</body>
+</html>
