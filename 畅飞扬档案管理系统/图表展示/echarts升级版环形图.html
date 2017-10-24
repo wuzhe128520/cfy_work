@@ -11,18 +11,22 @@
 	<script src="echarts/echarts.js"></script>
 	<script>
 		var myChart = echarts.init(document.getElementById('main'));
-		var option = option = {
+		var colors = ['red', 'orange', 'yellow','green','purple','blue','ching'];
+		var option = {
+
+			//调色盘颜色列表。如果系列没有设置颜色，则会依次循环从该列表中取颜色作为系列颜色。
+			color: colors,
 			tooltip: {
 				trigger: 'item',
 				formatter: "{a} <br/>{b}: {c} ({d}%)"
 			},
 			legend: {
-				data:['卷内文件','归档文件']
+				data:['肉','辅助','打野','射手','法师']
 			},
-			calculable : true,
+			//calculable : true,
 			series: [
 				{
-					name:'访问来源',
+					name:'英雄胜率',
 					type:'pie',
 					radius: ['50%', '70%'],
 					avoidLabelOverlap: false,
@@ -42,12 +46,15 @@
 					},
 					labelLine: {
 						normal: {
-							show: false
+							show: true
 						}
 					},
 					data:[
-						{value:60, name:'卷内文件'},
-						{value:40, name:'归档文件'}
+						{value:10, name:'肉'},
+						{value:20, name:'辅助'},
+						{value:30, name:'打野'},
+						{value: 15, name:'射手'},
+						{value: 25, name:'法师'},
 					]
 				}
 			]

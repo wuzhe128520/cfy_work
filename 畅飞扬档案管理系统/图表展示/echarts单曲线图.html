@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>echarts双曲线图</title>
+	<title>echarts单曲线图</title>
 	<link rel="stylesheet" href="../assert/js/bootstrap/dist/css/bootstrap.min.css">
 </head>
 <body>
@@ -16,6 +16,7 @@
 	<div id="main" style="width:600px;height: 600px">
 
 	</div>
+	<h4>在但曲线图中xAxisIndex不需要设置，legend和series只需要一个数据</h4>
 	<script src="../assert/js/jquery-3.2.1.min.js"></script>
 	<script src="../assert/js/moment/moment.min.js"></script>
 	<script src="../assert/js/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -30,13 +31,12 @@
 		//var initXaxis = getRandomArray();
 
 		option = {
+			color: colors,
 			title: {
-				text:'王者荣耀大乔小乔胜率走势图',
+				text:'王者荣耀大乔最近一年胜率走势图',
 				subtext: '本数据纯属虚构',
 				left: 'center'
 			},
-			color: colors,
-
 			//提示框组件(可以设置在多种地方)
 			tooltip: {
 				trigger: 'none', //触发类型;什么都不触发
@@ -52,7 +52,7 @@
 			*/
 			legend: {
 				orient: 'vertical',
-				data:['大乔', '小乔'],
+				data:['大乔'],
 				left: 'left'
 			},
 
@@ -105,28 +105,7 @@
 
 							//文本标签文字的格式化器
 							formatter: function (params) { //params 包含：value轴为当前值，axis.type为category时，值为axis.data里的数值。如果aixs.type为'time,其值为时间戳';
-								return '大乔' + params.value
-										+ (params.seriesData.length ? '：' + params.seriesData[0].data : '');
-							}
-						}
-					},
-					data: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"]
-				},
-				{
-					type: 'category',
-					axisTick: {
-						alignWithLabel: true
-					},
-					axisLine: {
-						onZero: false,
-						lineStyle: {
-							color: colors[0]
-						}
-					},
-					axisPointer: {
-						label: {
-							formatter: function (params) {
-								return '小乔  ' + params.value
+								return '大乔  ' + params.value
 										+ (params.seriesData.length ? '：' + params.seriesData[0].data : '');
 							}
 						}
@@ -146,13 +125,13 @@
 			],
 
 			//系列列表。每个系列通过type决定自己的图表类型
-			series: [
+			series:
 				{
 					//系列名称，用于tooltip的显示，legend的图例筛选，
 					// 在setOption更新数据和配置项时用于指定对应的系列
 					name:'大乔',
 					type:'line',
-					xAxisIndex: 1, //使用的x轴的index，在单个图表实例中存在多个x轴的时候有用
+					//xAxisIndex: 1, //使用的x轴的index，在单个图表实例中存在多个x轴的时候有用
 					smooth: true, //是否平滑曲线显示
 
 					//系列中的数据内容数组。数组项通常为具体的数组项。通常来说，数据用一个
@@ -165,27 +144,22 @@
 
 					//特别地，当只有一个轴为类目轴(axis.type为'category')的时候，
 					//数据可以简化用一个一维数组表示。
-					data: [300, 600, 780, 1000, 800, 600, 450]
-				},
-				{
-					name:'小乔',
-					type:'line',
-					smooth: true,
-					data: [450, 750, 850, 950, 800, 650, 250]
+					data: [0, 600, 780, 1000, 800, 600, 450]
 				}
-			]
+
 		};
 
 		//使用刚指定的配置项和数据显示图标
 		myChart.setOption(option);
 
+		console.log(myChart.getOption());
 		$(function() {
 			$('#analyseBtn').on('click', function(e) {
 
 				var beginTimeStr =  $('#beginTime').val(),
 					endTimeStr = $('#endTime').val();
 				e.preventDefault();
-				setXyAxisData(myChart, beginTimeStr, endTimeStr, true);
+				setXyAxisData(myChart, beginTimeStr, endTimeStr)
 			});
 		});
 

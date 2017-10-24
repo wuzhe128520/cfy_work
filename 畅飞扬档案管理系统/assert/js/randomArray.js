@@ -17,7 +17,12 @@ function getRandomArray(options) {
 
 	for (var i = 0; i < defaultOption.length; i++) {
 		//随机获取length个数值
-		ary.push(randomNum(defaultOption.min, defaultOption.max));
+		if(defaultOption.isFloat) {
+			ary.push(randomNum(defaultOption.min, defaultOption.max, true));
+		} else {
+			ary.push(randomNum(defaultOption.min, defaultOption.max));
+		}
+
 	}
 	return ary;
 }
