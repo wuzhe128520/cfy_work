@@ -1,0 +1,41 @@
+
+a、不同图表间的基础参数对比
+
+一、柱状图与折线图(曲线图)的基础参数差异性
+   属性   柱状图    折线图
+1、type: bar -> line (这里的type是series里的type属性)
+2、tooltip: {} -> {  trigger: 'none', axisPointer: {type: 'cross'}}
+折线图里面增加了坐标轴的指示器
+3、xAxis
+折线图里的xAxis增加了axisPointer坐标轴指示器
+axisPointer: {
+	label: {
+		formatter: function(params) {
+
+		}
+	}
+}
+
+二、饼图与环形图基础参数差异性
+  属性  	           饼图      环形图        说明
+1、radius              [50%]     [50%, 70%]
+2、series.avoidLabelOverlap   默认值     false      是否启用防止标签重叠策略，默认开启
+3、series.label.normal        默认值     {show: false,position: 'center'}  是否显示标签
+4、series.label.emphasis      默认值     {show: true,textStyle: {fontSize: '30',fontWeight: 'bold'}} 鼠标hover时候的显示效果
+
+b、同种图形之间不同表现形式的基础参数对比
+
+1、单曲线和双曲线基础参数差异性
+  属性           双曲线               单曲线
+legend.data   ['大乔'， '小乔']      ['出场次数']
+series.data   [{...},{...}]          [a,b]
+xAxis         [{...},{...}]          {}
+xAxis.axisLine.onzero  false         默认值
+总结：双曲线数据都是数组对象形式，单曲线一般是个对象(貌似也可以使用一个数组（里面只加一个唯一的对象）)
+
+c、使用心得
+1、在饼状图中，legend.data与series.data关联，一一对应。(在饼状图(环形图)中)
+2、在柱状图、折线图中使用了grid(直角坐标)x、y轴线中，xAxis.data与series.data关联，legend.data与series.name一一对应。(柱状图、折线图中(使用了grid(直角坐标系)的图表))
+
+
+

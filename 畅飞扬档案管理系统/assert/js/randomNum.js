@@ -8,7 +8,7 @@
  */
 function randomNum(minNum, maxNum, isReturnedFloat) {
 	if (maxNum < minNum){return};
-	if(isFloat){
+	if(isReturnedFloat){
 		return  (Math.random() * (maxNum - minNum) + minNum).toFixed(2);
 	}
 	return Math.floor(Math.random() * (maxNum - minNum) + minNum);
