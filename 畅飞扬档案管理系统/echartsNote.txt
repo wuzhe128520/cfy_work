@@ -33,9 +33,26 @@ xAxis         [{...},{...}]          {}
 xAxis.axisLine.onzero  false         默认值
 总结：双曲线数据都是数组对象形式，单曲线一般是个对象(貌似也可以使用一个数组（里面只加一个唯一的对象）)
 
-c、使用心得
+2、单条柱状图和多条柱状图的基础参数差异性
+  属性	   				单列柱状图     两列柱状图
+tooltip.trigger         默认           'axis'
+tooltip.axisPointer     默认           {type: 'shadow', show: false}
+legend                  ['借阅']       ['借阅', '审核']
+series                  {}			    [{},{}]
+series的数据            series.data 	series[0].data series[1].data
+grid.containLabel       默认            true
+c、series.name
+series.name是鼠标移上去后显示的相关信息
+
+d、legend.data
+legend.data是图例(图表上方的不同颜色的小方框)
+
+e、xAxis的类型与series数据类型得保持一致(要么同时是对象，要么同时是数组)
+
+z、使用心得
 1、在饼状图中，legend.data与series.data关联，一一对应。(在饼状图(环形图)中)
 2、在柱状图、折线图中使用了grid(直角坐标)x、y轴线中，xAxis.data与series.data关联，legend.data与series.name一一对应。(柱状图、折线图中(使用了grid(直角坐标系)的图表))
+
 
 
 
