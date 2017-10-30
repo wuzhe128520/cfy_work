@@ -116,6 +116,14 @@
 					this.chart.setOption(this.option);
 				},
 				updateEchartsView: function(newOption) {
+
+					if(this.option.series.data){
+						this.option.series.data = null;
+					}
+					if(this.option.xAxis && this.option.xAxis.data) {
+						this.option.xAxis.data = null;
+					}
+
 					$.extend(true, this.option, newOption);
 					this.showEcharts();
 				},
@@ -336,8 +344,6 @@
 					min: 1,
 					max: 100
 				});
-				console.log('oldData');
-				console.log(oldData);
 
 			//饼图和环形图修改series的data数据实现更改
 			for(var i = 0; i < oldData.length; i++) {
@@ -358,12 +364,17 @@
 					data: returnData
 				}
 			});
-
+			var newXaxisData = getTimeMinusArray(beginTime,endTime,{dateType: 2}),
+				xAxisLength = newXaxisData.length;
+			console.log(newXaxisData);
 			//更改柱状图
 			chart3.updateEchartsView({
+				xAxis: {
+					data: newXaxisData
+				},
 				series: {
 						data: getRandomArray({
-							length: chart3.getOption().xAxis.data.length,
+							length: xAxisLength,
 							min: 0,
 							max: 100
 						})
@@ -372,9 +383,12 @@
 
 			//更改曲线图
 			chart4.updateEchartsView({
+				xAxis: {
+					data: newXaxisData
+				},
 				series: {
 						data: getRandomArray({
-							length: chart4.getOption().xAxis.data.length,
+							length: xAxisLength,
 							min: 0,
 							max: 100
 						})
@@ -384,7 +398,7 @@
 		});
 	</script>
 	<script>
-		getTimeMinusArray(20170529,20171031,{dateType: 2});
+		getTimeMinusArray(20100101,20170101,{dateType: 3});
 	</script>
 </body>
 </html>

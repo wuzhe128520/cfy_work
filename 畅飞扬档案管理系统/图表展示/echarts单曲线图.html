@@ -39,7 +39,7 @@
 				},
 				//提示框组件(可以设置在多种地方)
 				tooltip: {
-					trigger: 'none', //触发类型;什么都不触发
+					trigger: 'axis', //触发类型;什么都不触发
 					axisPointer: {  //坐标轴指示器配置项
 						type: 'cross' //自动显示label
 					}
@@ -98,7 +98,7 @@
 						},
 
 						//x轴的指示器
-						axisPointer: {
+						/*axisPointer: {
 
 							//坐标轴指示器的文本标签
 							label: {
@@ -109,7 +109,7 @@
 											+ (params.seriesData.length ? '：' + params.seriesData[0].data : '');
 								}
 							}
-						},
+						},*/
 						data: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"]
 					}
 				,
@@ -121,32 +121,30 @@
 						type: 'value', //坐标轴类型
 						min: 0, //坐标轴刻度最小值
 						max: 1 //坐标轴刻度最大值
-					}
-				,
+					},
 
 				//系列列表。每个系列通过type决定自己的图表类型
 				series:
-					{
-						//系列名称，用于tooltip的显示，legend的图例筛选，
-						// 在setOption更新数据和配置项时用于指定对应的系列
-						name:'乔',
-						type:'line',
-						//xAxisIndex: 1, //使用的x轴的index，在单个图表实例中存在多个x轴的时候有用
-						smooth: false, //是否平滑曲线显示
+						{
+							//系列名称，用于tooltip的显示，legend的图例筛选，
+							// 在setOption更新数据和配置项时用于指定对应的系列
+							name:'大乔',
+							type:'line',
+							//xAxisIndex: 1, //使用的x轴的index，在单个图表实例中存在多个x轴的时候有用
+							smooth: false, //是否平滑曲线显示
 
-						//系列中的数据内容数组。数组项通常为具体的数组项。通常来说，数据用一个
-						//二维数组表示。每一列被称为一个[维度]。
-						/*
-						* 在直角坐标系(grid)中 [维度X]和[维度Y]会默认对应于xAxis和yAxis
-						* 在极坐标系中(polar)[维度X]和[维度Y]会默认对应于radiusAxis和angleAxis
-						*
-						* */
+							//系列中的数据内容数组。数组项通常为具体的数组项。通常来说，数据用一个
+							//二维数组表示。每一列被称为一个[维度]。
+							/*
+							* 在直角坐标系(grid)中 [维度X]和[维度Y]会默认对应于xAxis和yAxis
+							* 在极坐标系中(polar)[维度X]和[维度Y]会默认对应于radiusAxis和angleAxis
+							*
+							* */
 
-						//特别地，当只有一个轴为类目轴(axis.type为'category')的时候，
-						//数据可以简化用一个一维数组表示。
-						data: [0, 0.2, 0.6, 0.7, 0.4, 0.3, 0.8]
-					}
-
+							//特别地，当只有一个轴为类目轴(axis.type为'category')的时候，
+							//数据可以简化用一个一维数组表示。
+							data: [0, 0.2, 0.6, 0.7, 0.4, 0.3, 0.8]
+						}
 		};
 
 		//使用刚指定的配置项和数据显示图标

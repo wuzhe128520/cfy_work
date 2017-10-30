@@ -4,38 +4,27 @@
 	<meta charset="UTF-8">
 	<title>测试公用函数myChart的setOption()方法</title>
 </head>
-<div id="chart" style="width: 100%;height: 300px;"></div>
+<div id="chart" style="width: 600px;height: 400px;"></div>
 <body>
 	<script src="assert/js/jquery-3.2.1.min.js"></script>
 	<script src="assert/js/lodash/lodash.min.js"></script>
 	<script src="assert/js/echarts/echarts.js"></script>
+	<script src="assert/js/echartOption.js"></script>
 	<script src="assert/js/myChart.js"></script>
-	<script src="assert/js/myChart-setOption.js"></script>
 	<script>
-		var chart = echarts.init(document.getElementById('chart'));
-		var option = setOption(2,{
-			text: '测试双曲线',
-			legendData: ['全宗','案卷'],
-			series: [
-				{
-					data: [66,25,26,46,45,54]
-				},
-				{
-					data: [56,76,35,78,68,90]
+		$(function() {
+			var chart = new CfyCharts('chart',{
+				text: "本周销售业绩(单位：万元)",
+				seriesName: '销量',
+				legendData: ['红牛','雪碧'],
+				series: [{data:[20,30,40,50,60,70,80]},{data: [10,20,30,40,50,60,70]}],
+				xAxis: {
+					data: ['周一', '周二', '周三', '周四','周五','周六','周日']
 				}
-			],
-			xAxis:
-			[
-				{
-					data: ['周一','周二','周三','周四','周五','周六']
-				},
-				{
-					data: ['201701','201702','201703','201704','201705','201706']
-				}
-			]
+			}, 1);
+			chart.showEcharts();
 		});
-		console.log(option);
-		chart.setOption(option);
+
 	</script>
 </body>
 </html>

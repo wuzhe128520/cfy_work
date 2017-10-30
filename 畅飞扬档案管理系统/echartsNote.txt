@@ -49,6 +49,13 @@ legend.data是图例(图表上方的不同颜色的小方框)
 
 e、xAxis的类型与series数据类型得保持一致(要么同时是对象，要么同时是数组)
 
+f、单条曲线与多条曲线配置区别(只有一个x轴和y轴)
+属性				多曲线			单曲线
+tooltip.trigger     axis			none
+  legend.data  		['a','b']       ['a']
+   xAxis
+   axisPointer		默认
+   单曲线的series设置为数组形式，就可以变为多曲线形式
 z、使用心得
 1、在饼状图中，legend.data与series.data关联，一一对应。(在饼状图(环形图)中)
 2、在柱状图、折线图中使用了grid(直角坐标)x、y轴线中，xAxis.data与series.data关联，legend.data与series.name一一对应。(柱状图、折线图中(使用了grid(直角坐标系)的图表))

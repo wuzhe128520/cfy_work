@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Title</title>
-	<script src="assert/js/jquery2.2.4.js"></script>
+	<script src="assert/js/jquery-3.2.1.min.js"></script>
 	<script src="assert/js/gVerify.js"></script>
 </head>
 <body>
@@ -13,7 +13,7 @@
 	<input type="text" id="code_input" value="" placeholder="请输入验证码"/><button id="my_button">验证</button>
 <script>
 
-	validateCode("w",4);
+/*	validateCode("w",4);
 	function validateCode (t, e) {
 		function o(t, e) {
 			return Math.floor(Math.random() * (e - t) + t)
@@ -81,7 +81,7 @@
 					$(u).trigger("click")
 				}
 			}
-	}
+	}*/
 	var verifyCode = new GVerify("v_container");
 	document.getElementById("my_button").onclick = function(){
 		var res = verifyCode.validate(document.getElementById("code_input").value);
@@ -91,6 +91,7 @@
 			alert("验证码错误");
 		}
 	}
+	
 </script>
 </body>
 </html>

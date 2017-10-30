@@ -18,8 +18,8 @@
 				x:'center'
 			},
 			tooltip : {
-				trigger: 'item',
-				formatter: "{a} <br/>{b} : {c} ({d}%)"
+				/*trigger: 'item',
+				formatter: "{a} <br/>{b} : {c} ({d}%)"*/
 			},
 			legend: {
 
@@ -30,14 +30,9 @@
 				left: 'left',
 				data: ['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
 			},
-			series : [
-				{
+			series : {
 					name: '访问来源',
 					type: 'pie',
-					radius : '55%',
-
-					//饼图的中心(圆心)坐标，数组的第一项是横坐标，第二项是纵坐标。
-					center: ['50%', '60%'],
 					data:[
 						{value:335, name:'直接访问'},
 						{value:310, name:'邮件营销'},
@@ -46,18 +41,7 @@
 						{value:1548, name:'搜索引擎'}
 					],
 
-					//图形样式
-					itemStyle: {
-
-						//图形高亮状态下的样式。(比如鼠标悬浮或者图例联动高亮时)
-						emphasis: {
-							shadowBlur: 10,
-							shadowOffsetX: 0,
-							shadowColor: 'rgba(0, 0, 0, 0.5)'
-						}
-					}
 				}
-			]
 		};
 
 		//使用刚指定的配置项和数据显示图标

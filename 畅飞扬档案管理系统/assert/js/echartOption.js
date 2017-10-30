@@ -34,8 +34,9 @@
 * @param option: 用户传递过来的新配置
  *
  * 传入类型、传入相关的数据展示图表
+ * (暂时不考虑多个轴的情况)
  */
-function setOption(types, option) {
+function setChartOption(types, option) {
 
 	//需要作为返回值返回的新的配置信息
 	var newOption = {},
@@ -43,9 +44,9 @@ function setOption(types, option) {
 		//默认显示最简单的饼图
 		__DEFAULT_OPTION = {
 			title: {
-				text: option.text||"图形的标题",
+				text: option.text||"畅飞扬图形分析",
 				left: 'center',
-				top: 'top'
+				x: 'center'
 			},
 			tooltip: {
 
@@ -71,7 +72,9 @@ function setOption(types, option) {
 	//将属性合并到newOption
 	$.extend(true, newOption, __DEFAULT_OPTION, option);
 
+	//各类型必须添加的属性(不添加就会报错)
 	var forceAttrs = {};
+
 	switch (types) {
 
 		//如果是柱状图
@@ -80,6 +83,10 @@ function setOption(types, option) {
 			//x轴的轴名数组(可能存在多根x轴线,相应的series.data也会有多个维度的数组)
 			var series = newOption.series,
 				xAxis = newOption.xAxis;
+
+			if(!_.has(newOption, 'xAxis')) {
+				throw new Error('请添加xAxis属性！');
+			}
 
 			//必须设置的属性
 			forceAttrs = {
@@ -101,7 +108,7 @@ function setOption(types, option) {
 
 			if(_.isArray(series)){
 
-				//如果有多个x轴存在,循环x轴(即双曲线或多曲线)
+				//如果有多个柱子
 				var manyXattrs = {
 					tooltip: {
 						trigger: 'axis',
@@ -114,7 +121,9 @@ function setOption(types, option) {
 						}
 					}
 				};
+
 				var legendDataDouble = newOption.legend.data;
+
 				for(var j = 0,l = series.length; j < l; j++) {
 					//将legened.data与series.data关联起来
 					series[j]['type'] = "bar";
@@ -124,11 +133,15 @@ function setOption(types, option) {
 			}
 			break;
 
-		//如果是折线图
+		//如果是折线图(先以单个x轴为主)
 		case 2:
 			var xAxisLine = newOption.xAxis,
 				legendLine = newOption.legend.data,
 				seriesLine = newOption.series;
+
+			if(!_.has(newOption, 'xAxis')) {
+				throw new Error('请添加xAxis属性！');
+			}
 
 			newOption['yAxis'] = {};
 			newOption['tooltip'] = {
@@ -138,41 +151,11 @@ function setOption(types, option) {
 				}
 			};
 
-			//如果x轴是数组形式，说明是多条曲线(如何知道是多曲线(一个x轴和多个x轴)？通过series么？)
-			if(_.isArray(seriesLine)) {
-
-				for(var m = 0, s = seriesLine.length; m < s; m++) {
-					seriesLine[m]['name'] = legendLine[m];
-					seriesLine[m]['type'] = 'line';
-					//设置多余的x轴都使用第一条x轴的seriesData(否则，鼠标移上去，其他轴的数据显示不了)
-				}
-
-				for(var k = 0,size = xAxisLine.length; k < size;k++) {
-						xAxisLine[k]['axisTick'] = {
-							alignWithLabel: false, //保证刻度线和标签对齐
-							interval: 0 //强制显示所有刻度
-						};
-						xAxisLine[k]['axisLine'] = {onZero: false};
-						xAxisLine[k]['type'] = 'category';
-						(function(k){
-							xAxisLine[k]['axisPointer'] = {
-								label: {
-									formatter: function(params){
-										return legendLine[k] + ' '+ params.value
-											+ (params.seriesData.length ? '：' + params.seriesData[0].data : '');
-									}
-								}
-							}
-						})(k);
-				}
-				if (size > 1) {
-					seriesLine[size-1]['xAxisIndex'] = 1;
-				}
-				$.extend(newOption,{series: seriesLine},{xAxis: xAxisLine});
-			}
+			//如果x轴是数组形式，说明是多条曲线(通过series来判断是否是多条曲线，通过xAxis的length来判断是否是多条x轴的曲线)
 			if(_.isPlainObject(xAxisLine)){
 				forceAttrs = {
 					tooltip: {
+						trigger: 'axis',
 						axisPointer: {
 							type: 'cross'
 						}
@@ -199,24 +182,28 @@ function setOption(types, option) {
 						type : 'value'
 					}
 				};
-
-/*				if(_.isArray(seriesLine)&&_.isArray(legendLine)){
-					for(var n = 0,lng = seriesLine.length;n < lng;n++) {
-						seriesLine[n]['type'] = 'line';
-						seriesLine[n]['name'] = legendLine[n];
-
-					}
-					$.extend(forceAttrs, {series: seriesLine});
-				}*/
-
 				$.extend(true,newOption,forceAttrs);
-				console.log(newOption);
+			}
+
+			//如果是多条曲线、legend和series都应该是数组形式
+			if(_.isArray(seriesLine)) {
+
+				for(var s = 0,sLength = seriesLine.length; s < sLength; s++) {
+					seriesLine[s]['type'] = 'line';
+					seriesLine[s]['name'] = legendLine[s];
+				}
+				$.extend(true, newOption, {series: seriesLine});
 			}
 		break;
 		default:
 			var legendData = newOption.legend.data,
 				seriesData = newOption.series.data,
 				newSeriesData = [];
+
+			if(legendData.length !== seriesData.length){
+				throw new Error('legendData和series.data的length不一致');
+			}
+
 
 			for(var i = 0,length = seriesData.length; i < length; i++) {
 				newSeriesData.push({
