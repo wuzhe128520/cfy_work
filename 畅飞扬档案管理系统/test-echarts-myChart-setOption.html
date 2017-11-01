@@ -15,13 +15,11 @@
 		$(function() {
 			var chart = new CfyCharts('chart',{
 				text: "本周销售业绩(单位：万元)",
-				seriesName: '销量',
 				legendData: ['红牛','雪碧'],
-				series: [{data:[20,30,40,50,60,70,80]},{data: [10,20,30,40,50,60,70]}],
-				xAxis: {
-					data: ['周一', '周二', '周三', '周四','周五','周六','周日']
-				}
-			}, 1);
+                seriesData: [
+                  20,30
+                ]
+			}, 3);
 			chart.showEcharts();
 		});
 
