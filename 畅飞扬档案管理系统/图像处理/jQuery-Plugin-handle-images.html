@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery插件处理图片</title>
+    <link rel="stylesheet" href="cropper-3.1.3/dist/cropper.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -ms-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+        /*=== 很重要的css部分 ===*/
+        img {
+            width: 100%;
+        }
+        /* 覆盖Cropper默认的样式(默认为方形，这里改为圆形了) */
+       /* .cropper-view-box,
+        .cropper-face {
+            border-radius: 50%;
+        }*/
+
+    </style>
+    <link rel="stylesheet" href="../assert/js/bootstrap/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-2">
+            <div style="width:100%;margin: 0 auto;overflow: hidden;" >
+                <img src="images/test.jpg" alt="" id="image">
+            </div>
+            <div class="wrapper" style="text-align: center;">
+                <button id="beginCrop">获取裁剪图片</button>
+                <button id="zoomOut">放大</button>
+                <button id="zoomIn">缩小</button>
+                <button id="reset">还原</button>
+            </div>
+            <div class="container-fluid">
+                <div class="row">
+                    <h5>预览：</h5>
+                        <div class="col-md-12">
+                            <div class="col-md-6">
+                                <div class="preview"></div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="preview"></div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="preview"></div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <h5>裁剪结果：</h5>
+            <div id="result"></div>
+        </div>
+    </div>
+</div>
+<p>
+
+    1、裁剪的宽高继承自图片的父元素(必须是可见的块级元素)
+    2、输出的裁剪数据时机遇原始图片的大小，因此你可以使用他们直接裁剪图片
+    3、裁剪跨源的图像，需要确保浏览器支持cors设置属性，后台需要设置跨域
+
+</p>
+<p>
+<ul>
+    <li>
+        一、设置参数
+        1、单个对象设置：$('img').cropper(options);覆盖全局默认设置: $.fn.cropper.setDefaults(options);
+        2、viewMode
+            值： 0、没有限制
+                 1、限制裁剪框不能超过canvas大小的范围
+                 2、使用最小的canvas大小来适应外层容器
+                 3、强制canvas填满容器
+        3、dragMode 拖拽模式
+        crop: 创建一个新的裁剪框
+        move: 移动canvas
+        none: 什么都不做
+
+        3、aspectRatio
+        设置裁剪框的宽高比，默认不限制宽高比
+
+        4、data
+        自动将之前裁剪的已保存的数据传递给setData()方法。
+
+        5、preview
+        增加一个额外的元素用于预览;
+        note: 1、最大宽度是preview容器的初始宽度
+              2、最大高度，，，同上
+              3、如果设置了aspectRatio选项，确保也给preview容器设置一样的aspectRatio(宽高比)
+              4、如果preview没有正确展示，给preview的容器设置: overflow: hidden;
+
+        6、responsive
+        当窗口改变时，重新渲染裁剪框
+
+        7、restore
+        在窗口改变后，恢复裁剪框区域
+
+        8、checkCrossOrigin
+        检查当前图片是否是跨域的图片。如果是的话，在克隆图片时候，将会给克隆的图片元素加上 crossOrigin属性;为了避免浏览器缓存错误，在重新加载图片资源时，会给src属性加上一个时间戳
+
+        9、modal
+        在图片之上，裁剪框之下，显示一个黑色模态框
+
+        10、guides(boolean)
+        在裁剪框上显示虚线
+
+        11、center(boolean)
+        在裁剪框显示中央指示器
+
+        12、highlight(boolean)
+        在裁剪框上显示白色的模态框
+
+        13、background(boolean)
+        显示容器的网格背景色
+
+        14、autoCrop
+        在初始化的时候启用裁剪图片(将会显示裁剪框等)
+
+        15、autoCropArea
+        0到1之间的数字，定义自动裁剪区域的大小(百分比)
+
+        16、movable
+        是否启用移动图片的功能
+
+        17、scalable
+        是否启用图片缩放
+
+        18、zoomable
+        缩放？？？
+
+        19、zoomOnTouch
+        是否启用触摸屏拖拽缩放图片
+
+        20、zoomOnWheel
+        是否启用滚轮缩放图片
+
+        21、wheelZoomRatio
+        定义滚轮时的比例
+
+        22、cropBoxMovable
+        是否启用拖拽移动裁剪框
+
+        23、cropBoxResizable
+        是否启用拖拽拉伸裁剪框
+
+        24、toggleDragModeOnDblclick
+        在裁剪时双击在crop和move模式之间切换
+
+        二、方法
+        1、ready
+        由于加载图片是一个异步操作，除了setAspectRatio()，replace()和destory() 这几个方法外，
+        大部分的方法都应该在ready方法后去调用。
+        $().cropper({
+            ready: function() {
+                $().cropper('method',arg01, arg02,.....);
+            }
+
+        });
+
+        2、crop()
+        手动的显示裁剪框
+        $().cropper({
+            autoCrop: false,
+            ready: function() {
+                $(this).cropper('crop');
+            }
+        });
+
+        3、reset()
+        重置图片和裁剪框到初始化状态
+
+        4、clear()
+        清除裁剪框
+
+        5、replace(url, onlyColorChanged);
+        替换图片的路径重新创建裁剪框
+
+        6、enable()
+        启用cropper插件功能
+
+        7、disable()
+        禁用cropper插件功能
+
+        8、destory()
+        销毁cropper同时移除图片的实例对象
+
+        9、move(offsetX, offsetY)
+        使用相对偏移量，移动图片的容器
+
+        10、moveTo(x,y);
+        使用绝对位置点的坐标移动图片容器
+
+        11、zoom(ratio)
+        使用相对比率缩放图片容器(canvas)
+        $('img').cropper('zoom', 0.1); //将图片放大为原来的0.1倍。也就是原图乘以 1.1;
+
+        12、zoomTo(ratio);
+        使用绝对比率值缩放canvas(图片容器)
+        $('img').cropper('zoom', 1.3); //将图片放大到1.3倍
+
+        13、getData([rounded]); //参数可选
+        获取最终裁剪区域的位置和大小数据(基于原始图片的实际尺寸)
+
+        14、setData(data); //与上面相反
+        这个方法仅在viewMode参数的值大于等于1时候有用
+
+        15、getContainerData()
+        获取容器的大小数据
+
+        16、getImageData()
+        获取图片位置、大小以及其他相关的数据
+
+        17、getCanvasData()
+        获取canvas(图片的外围包裹容器)位置和大小的数据
+
+        18、getCropBoxData()
+        获取裁剪框的位置和大小数据
+
+        19、setCropBoxData() //参考上面方法
+
+        20、setAspectRatio(aspectRatio)
+        改变裁剪框的宽高比
+
+        21、setDragMode(mode);
+        改变拖拽模式
+        tip: 双击cropper时，可以在move和crop模式之间切换。
+
+        三、事件
+        1、ready
+        在cropper实例构建完成时触发
+
+        2、cropstart
+        在canvas(图片容器)或裁剪框开始改变之前触发
+
+        3、cropmove
+        当canvas(图片容器)裁剪框正在改变时触发
+
+        4、cropend
+        在canvas(图片容器)或裁剪框停止改变时触发
+
+        5、crop(event)
+        当canvas(图片容器)或裁剪框改变后触发
+
+        6、zoom(event)
+        当一个裁剪实例开始放大或缩小canvas(图片容器)时触发
+
+        四、no conflict
+        $.fn.cropper.noConflict();避免重命名
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+</ul>
+</p>
+
+    <script src="../assert/js/jquery-3.2.1.min.js"></script>
+    <script src="cropper-3.1.3/dist/cropper.min.js"></script>
+    <script>
+        $('#beginCrop').on('click', function() {
+
+            var croppedImg = $image.cropper('getCroppedCanvas');//获取裁剪图片的canvas数据
+            $('#result').html('<img src="' + croppedImg.toDataURL() + '"/>')
+        });
+        var $image = $('#image'),
+            $previews = $('.preview');
+
+        $image.cropper({
+
+            //设置裁剪范围的长宽比
+            aspectRatio: 1,
+            autoCrop: true,
+            viewMode: 3,
+            ready: function() {
+                //$(this).cropper('crop');//显示自动裁剪
+
+                /*=== 设置自定义预览部分begin ===*/
+                var $clone = $(this).clone().removeClass('cropper-hidden');
+
+                $clone.css({
+                    display: 'block',
+                    width: '100%',
+                    minWidth: 0,
+                    minHeight: 0,
+                    maxWidth: 'none',
+                    maxHeight: 'none'
+                });
+                $previews.css({
+                    width: '100%',
+                    overflow: 'hidden'
+                }).html($clone);
+                /*=== 设置自定义预览部分end ===*/
+
+            },
+            crop: function(e) {//裁剪框移动时，实时预览图片
+                var imageData = $(this).cropper('getImageData');
+                var previewAspectRatio = e.width / e.height;
+
+                $previews.each(function () {
+                    var $preview = $(this);
+                    var previewWidth = $preview.width();
+                    var previewHeight = previewWidth / previewAspectRatio;
+                    var imageScaledRatio = e.width / previewWidth;
+
+                    $preview.height(previewHeight).find('img').css({
+                        width: imageData.naturalWidth / imageScaledRatio,
+                        height: imageData.naturalHeight / imageScaledRatio,
+                        marginLeft: -e.x / imageScaledRatio,
+                        marginTop: -e.y / imageScaledRatio
+                    });
+                });
+            }
+        });
+
+       var initialRatio = 0.2,
+           scaleRatio = 0.2, //每次默认缩放0.2倍
+            maxScaleRatio = 2,  //最大缩放2倍
+            initialScaleRatio = 1, //图片初始倍数
+            currentScaleRatio = 1, //当前图片的缩放倍数,
+            isMaxStatus = false,    //当前图片是否时放大状态
+            isMinStatus = false,    //当前图片是否是缩小状态
+            isScaleMax = true,     //是否继续放大
+            isScaleMin = true;     //是否继续缩小
+
+        //放大
+        $('#zoomOut').on('click', function() {
+
+            //是否允许放大
+            if(isScaleMax) {
+                if(scaleRatio !== initialRatio) {
+                    scaleRatio = initialRatio;
+                }
+                isScaleMin = true;
+                currentScaleRatio = ((currentScaleRatio * 1000 + scaleRatio * 1000) / 1000).toFixed(2) * 1;
+                if(currentScaleRatio / initialScaleRatio >= maxScaleRatio){
+                    isScaleMax = false;
+
+                    //当当前放大倍数大于最大倍数时候，重新计算最后一次的倍数
+                    //(currentScaleRatio - scaleRatio+ x)/initialScaleRatio === maxScaleRatio;
+                    if(currentScaleRatio / initialScaleRatio > maxScaleRatio) {
+                        scaleRatio = ((maxScaleRatio * initialScaleRatio * 1000 - (currentScaleRatio - scaleRatio) * 1000) / 1000).toFixed(2) * 1;
+                        currentScaleRatio = ((currentScaleRatio * 1000 - scaleRatio * 1000) / 1000).toFixed(2) * 1;
+                    }
+                }
+                $('#image').cropper('zoom', scaleRatio); //每次放大scaleRatio倍
+                console.log('放大：',scaleRatio);
+                console.log('当前放大后的缩放比：' + currentScaleRatio);
+
+            } else {
+                console.log('当前放大后的缩放比：' + currentScaleRatio);
+                alert("不能放大了！");
+            }
+        });
+
+        //缩小
+        $('#zoomIn').on('click', function() {
+            if(isScaleMin) {
+                if(scaleRatio !== initialRatio) {
+                    scaleRatio = initialRatio;
+                }
+                isScaleMax = true;
+                currentScaleRatio = ((currentScaleRatio * 1000 - scaleRatio * 1000) / 1000).toFixed(2) * 1;
+                if(initialScaleRatio / currentScaleRatio >= maxScaleRatio){
+                    isScaleMin = false;
+                    //initialScaleRatio / (currentScaleRatio + scaleRatio - x) === maxScaleRatio;
+                    if(initialScaleRatio / currentScaleRatio  > maxScaleRatio) {
+                        scaleRatio = (((currentScaleRatio + scaleRatio) * 1000 - (initialScaleRatio / maxScaleRatio) * 1000) / 1000).toFixed(2) * 1;
+                        currentScaleRatio = ((currentScaleRatio * 1000 + scaleRatio * 1000) / 1000).toFixed(2) * 1;
+                    }
+                }
+                $('#image').cropper('zoom', -scaleRatio); //每次缩小scaleRatio倍
+                console.log('缩小：',-scaleRatio);
+                console.log('当前缩小后的缩放比：' + currentScaleRatio);
+
+            } else {
+                console.log('当前缩小后的缩放比：' + currentScaleRatio);
+                alert('不能在缩小！');
+            }
+        });
+
+        //重置图片为初始状态
+        $('#reset').on('click', function() {
+            $image.cropper('reset');
+            currentScaleRatio = 1;
+            scaleRatio = 0.2;
+            isScaleMax = true;
+            isScaleMin = true;
+        });
+
+    </script>
+</body>
+</html>
