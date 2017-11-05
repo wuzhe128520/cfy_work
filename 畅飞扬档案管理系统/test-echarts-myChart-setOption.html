@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>测试公用函数myChart的setOption()方法</title>
+</head>
+<div id="chart" style="width: 600px;height: 400px;"></div>
+<body>
+	<script src="assert/js/jquery-3.2.1.min.js"></script>
+	<script src="assert/js/lodash/lodash.min.js"></script>
+	<script src="assert/js/echarts/echarts.js"></script>
+	<script src="assert/js/echartOption.js"></script>
+	<script src="assert/js/myChart.js"></script>
+	<script>
+		$(function() {
+			var chart = new CfyCharts('chart',{
+				text: "本周销售业绩(单位：万元)",
+				legendData: ['红牛','雪碧'],
+                seriesData: [
+                  20,30
+                ]
+			}, 3);
+			chart.showEcharts();
+		});
+
+	</script>
+</body>
+</html>

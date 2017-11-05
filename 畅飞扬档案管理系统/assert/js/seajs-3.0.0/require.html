@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Title</title>
+    <script src="js/require.js"></script>
+</head>
+<body>
+<ul>
+    <li v-for="">{{  }}</li>
+    <li ngFor="">{{  }}</li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+</ul>
+html4+css2
+
+html5+css3
+
+ecmascript 5.1 现在学习的是之前的
+在之前的扩展 新增
+ecmascript 6
+
+</body>
+</html>
+<script>
+    class fn{
+      constructor (name) {
+        this.name = name
+      }
+      xxx () {
+        return this.name
+      }
+    }
+    class fn1 extends fn{
+      constructor () {
+        console.log(super());
+        console.log(this.name);
+      }
+      aaa () {
+        super.xxx()
+      }
+    }
+    new fn("wulv");
+    new fn1();
+
+
+
+    require(["./js/r1.js"], function (goudan) {
+      console.log(goudan("li"));
+    })
+
+</script>

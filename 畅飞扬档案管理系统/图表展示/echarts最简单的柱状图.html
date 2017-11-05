@@ -2,17 +2,35 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title></title>
+	<title>最简单的柱状图</title>
+	<link rel="stylesheet" href="../css/bootstrap.min.css">
 </head>
 <body>
 	<div id="main" style="width: 600px;height: 400px">
 
 	</div>
+	<form action="" class="form-inline">
+		<input type="text" class="form-control" value="20160101" id="beginTime">
+		<input type="text" class="form-control" value="20170101" id="endTime">
+	</form>
+	<button id="change">更换数据</button>
+	<h4>yAxis必须设置(空对象也行)</h4>
+	<h4>tooltip：移动到条状时候显示详细信息时使用。可以设置为空对象。</h4>
+	<h4>series里的data数据用于绘制图形</h4>
+	<script src="../assert/js/jquery-3.2.1.min.js"></script>
 	<script src="echarts/echarts.js"></script>
+	<script src="../assert/js/moment/moment.min.js"></script>
+	<script src="../assert/js/randomNum.js"></script>
+	<script src="../assert/js/randomArray.js"></script>
+	<script src="../assert/js/timeMinusArray.js"></script>
 	<script>
 		var myChart = echarts.init(document.getElementById('main'));
 		var option = {
+
+			//标题组件
 			title: {
+
+				//主标题文本
 				text: 'Echarts 入门示例'
 			},
 			tooltip: {
@@ -21,6 +39,7 @@
 			legend: {
 				data: ['销量']
 			},
+
 			//
 			xAxis: {
 				data: ["衬衣","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
@@ -28,17 +47,43 @@
 
 			yAxis: {},
 
-			series: [
+			series:
 				{
 					name: '销量',
 					type: 'bar',
 					data: [5, 20, 36, 10, 10, 20]
 				}
-			]
+
 		};
 
 		//使用刚指定的配置项和数据显示图标
 		myChart.setOption(option);
+
+	</script>
+	<script>
+		$(function() {
+			$('#change').on('click', function() {
+
+				var timeArray = getTimeMinusArray($('#beginTime').val(), $('#endTime').val()),
+					timeArrayLength = timeArray.length;
+
+				myChart.setOption({
+					xAxis:
+						{
+							data: timeArray,
+						},
+					series: [
+						{
+							data: getRandomArray({
+								length: timeArrayLength,
+								min: 0,
+								max: 100
+							})
+						}
+					],
+				});
+			});
+		});
 	</script>
 </body>
 </html>

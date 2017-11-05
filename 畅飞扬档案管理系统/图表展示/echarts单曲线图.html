@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>echarts单曲线图</title>
+	<link rel="stylesheet" href="../assert/js/bootstrap/dist/css/bootstrap.min.css">
+</head>
+<body>
+	<form action="" class="form-inline">
+		<div class="form-group">
+			<input type="text" value="20160710" class="form-control" id="beginTime">
+			<input type="text" value="20171023" class="form-control" id="endTime">
+			<button class="btn btn-primary" id="analyseBtn">开始分析</button>
+		</div>
+	</form>
+	<div id="main" style="width:600px;height: 600px">
+
+	</div>
+	<h4>在但曲线图中xAxisIndex不需要设置，legend和series只需要一个数据</h4>
+	<script src="../assert/js/jquery-3.2.1.min.js"></script>
+	<script src="../assert/js/moment/moment.min.js"></script>
+	<script src="../assert/js/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="echarts/echarts.js"></script>
+	<script src="../assert/js/randomNum.js"></script>
+	<script src="../assert/js/randomArray.js"></script>
+	<script src="../assert/js/timeMinusArray.js"></script>
+	<script src="../assert/js/xYaxisData.js"></script>
+	<script>
+		var myChart = echarts.init(document.getElementById('main'));
+		var colors = ['#5793f3', '#d14a61', '#675bba'];
+		//var initXaxis = getRandomArray();
+
+		var option = {
+				color: colors,
+				title: {
+					text:'王者荣耀大乔最近一年胜率走势图',
+					subtext: '本数据纯属虚构',
+					left: 'center'
+				},
+				//提示框组件(可以设置在多种地方)
+				tooltip: {
+					trigger: 'axis', //触发类型;什么都不触发
+					axisPointer: {  //坐标轴指示器配置项
+						type: 'cross' //自动显示label
+					}
+				},
+
+				//图例组件
+				/*
+				  图例组件展现了不同系列的标记(symbol)，颜色和名字。
+				  可以通过点击图例控制哪些系列不显示。
+				*/
+				legend: {
+					orient: 'vertical',
+					data: ['大乔'],
+					left: 'left'
+				},
+
+				//直角坐标系内绘图网格，单个gird内最多可以放置上下两个X轴，左右两个Y轴。
+				//可以在网格上绘制折线图，柱状图，散点图(气泡图);
+				grid: {
+					top: 100, //组件离容器上侧的距离
+					bottom: 50 //组件离容器下侧的距离
+				},
+
+				//直角坐标系grid中的x轴，一般情况下单个gird组件最多只能放上下两个x轴，多于两个X轴需要通过配置
+				//offset属性防止同个位置多个x轴的重叠
+				xAxis:
+					{
+						//坐标轴类型
+						/*
+						*  value: 数值轴，适用于连续数据
+						*  category: 类目轴，适用于离散的类目数据，为该类型时，必须通过data设置类目数据。
+						*  time: 时间轴，适用于连续的时序数据，与数值轴相比，时间轴带有时间的格式化，在刻度计算上也有所不同
+						*  ，例如会根据跨度的范围来决定使用月、星期，日还是小时范围的刻度
+						* */
+						type: 'category',
+
+						//坐标轴刻度设置
+						axisTick: {
+							alignWithLabel: false, //保证刻度线和标签对齐
+							interval: 0 //强制显示所有刻度
+						},
+
+						//坐标轴轴线相关设置
+						axisLine: {
+
+							//x轴或者y轴的轴线是否在另一个轴的0刻度上，只有在另一个轴
+							//为数值轴且包含0刻度时有效。
+							//onZero: false,
+
+							//设置坐标轴线的样式
+							lineStyle: {
+
+								//坐标轴线 线的颜色
+								color: colors[1]
+							}
+						},
+
+						//x轴的指示器
+						/*axisPointer: {
+
+							//坐标轴指示器的文本标签
+							label: {
+
+								//文本标签文字的格式化器
+								formatter: function (params) { //params 包含：value轴为当前值，axis.type为category时，值为axis.data里的数值。如果aixs.type为'time,其值为时间戳';
+									return '大乔  ' + params.value
+											+ (params.seriesData.length ? '：' + params.seriesData[0].data : '');
+								}
+							}
+						},*/
+						data: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"]
+					}
+				,
+
+				//直角坐标系grid中的y轴;一般情况下单个grid组件最多只能放左右两个y轴，
+				//多于两个y轴需要配置offset属性防止同个位置多个y轴的重叠
+				yAxis:
+					{
+						type: 'value', //坐标轴类型
+						min: 0, //坐标轴刻度最小值
+						max: 1 //坐标轴刻度最大值
+					},
+
+				//系列列表。每个系列通过type决定自己的图表类型
+				series:
+						{
+							//系列名称，用于tooltip的显示，legend的图例筛选，
+							// 在setOption更新数据和配置项时用于指定对应的系列
+							name:'大乔',
+							type:'line',
+							//xAxisIndex: 1, //使用的x轴的index，在单个图表实例中存在多个x轴的时候有用
+							smooth: false, //是否平滑曲线显示
+
+							//系列中的数据内容数组。数组项通常为具体的数组项。通常来说，数据用一个
+							//二维数组表示。每一列被称为一个[维度]。
+							/*
+							* 在直角坐标系(grid)中 [维度X]和[维度Y]会默认对应于xAxis和yAxis
+							* 在极坐标系中(polar)[维度X]和[维度Y]会默认对应于radiusAxis和angleAxis
+							*
+							* */
+
+							//特别地，当只有一个轴为类目轴(axis.type为'category')的时候，
+							//数据可以简化用一个一维数组表示。
+							data: [0, 0.2, 0.6, 0.7, 0.4, 0.3, 0.8]
+						}
+		};
+
+		//使用刚指定的配置项和数据显示图标
+		myChart.setOption(option);
+
+		console.log(myChart.getOption());
+		$(function() {
+			$('#analyseBtn').on('click', function(e) {
+
+				var beginTimeStr =  $('#beginTime').val(),
+					endTimeStr = $('#endTime').val();
+				e.preventDefault();
+				setXyAxisData(myChart, beginTimeStr, endTimeStr)
+			});
+		});
+
+		/**
+		 *
+		 * @param myChart: echarts的实例
+		 * @param beginTimeStr: 开始时间的字符串(也可以是符合时间的数字字符串)
+		 * @param endTimeStr: 结束时间的字符串(同上)
+		 * 设置双曲线的横轴和纵轴的数据
+		 */
+
+	</script>
+	<h4>1、legend的data数据要与series的name值对应</h4>
+	<h4>2、series里的data与xAxis.data一一对应</h4>
+	<p>
+		<code>
+			xAxis: {
+			data: ['a', 'b', 'm', 'n']
+			},
+			series: [{
+			data: [23, 44, 55, 19]
+			}]
+			//他其实是下面这种形式的简化：
+				data: [[0, 23], [1,44], [2, 55], [3, 19]]
+		</code>
+	</p>
+</body>
+</html>

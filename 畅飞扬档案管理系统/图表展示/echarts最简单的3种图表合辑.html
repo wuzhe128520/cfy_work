@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>echarts最简单的3种图形合辑</title>
+	<link rel="stylesheet" href="../assert/js/bootstrap/dist/css/bootstrap.min.css">
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6">
+				<div id="main" style="width: 100%;height: 300px">
+
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div id="main2" style="width: 100%;height: 300px">
+
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div id="main3" style="width: 100%;height: 300px">
+
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div id="main4" style="width: 100%;height: 300px">
+
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div id="doubleLine" style="width: 100%;height: 300px">
+
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div id="doubleBar" style="width: 100%;height: 300px">
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<form action="" class="form-inline">
+		<input type="text" class="form-control" value="20160101" id="beginTime">
+		<input type="text" class="form-control" value="20170101" id="endTime">
+	</form>
+	<button id="change">更换数据</button>
+	<h4>封装需求：</h4>
+	<p>
+		传入不同的type值和数据(不确定是什么数据。可以准备四种最基础的默认配置),
+		显示对应的图形。
+	</p>
+	<script src="../assert/js/jquery-3.2.1.min.js"></script>
+	<script src="echarts/echarts.js"></script>
+	<script src="../assert/js/moment/moment.min.js"></script>
+	<script src="../assert/js/randomNum.js"></script>
+	<script src="../assert/js/randomArray.js"></script>
+	<script src="../assert/js/timeMinusArray.js"></script>
+	<script>
+
+		(function($,chart, factory) {
+			return factory(chart, $);
+		})(jQuery,echarts, function(chart, $) {
+
+			//通过一个标识，来配置option？？？
+			function setOption(type) {
+				//一般都具有的配置
+				/*
+				* 0：柱状图配置
+				* 1：折线图(包括曲线图)配置
+				* 2：饼图配置
+				* 3：环形图配置
+				* */
+
+			}
+
+			function MyCharts(targetId, option) {
+
+				MyCharts.__DEFAULT_OPTION__ = {
+					title: {
+						text: option.text,
+						left: 'center', //居中text,
+						top: 'top'
+					},
+					tooltip : {
+
+					},
+					legend: {
+						//图例列表的布局朝向
+						orient: 'vertical',
+
+						//图例组件离容器左侧的距离
+						left: 'left',
+						data: option.legendData
+					},
+					series:
+						{
+							name: option.seriesName||'', //移动到图形上显示的名字
+
+							//显示饼图
+							type: option.type||'pie',
+
+							data: option.seriesData||[]
+						}
+
+				};
+
+				this.targetId = targetId;
+				this.option = $.extend(true, MyCharts.__DEFAULT_OPTION__,option);
+				this.chart = echarts.init(document.getElementById(targetId));
+			}
+
+			MyCharts.prototype = {
+				showEcharts: function() {
+					this.chart.setOption(this.option);
+				},
+				updateEchartsView: function(newOption) {
+
+					if(this.option.series.data){
+						this.option.series.data = null;
+					}
+					if(this.option.xAxis && this.option.xAxis.data) {
+						this.option.xAxis.data = null;
+					}
+
+					$.extend(true, this.option, newOption);
+					this.showEcharts();
+				},
+				getOption: function() {
+					return this.option;
+				}
+			};
+
+			return window.CfyCharts = MyCharts;
+		});
+
+		//最简单的饼图
+		var chart = new CfyCharts('main', {
+			tooltip: {
+				//trigger: 'item',
+				formatter: "{a} <br/>{b} : {c} ({d}%)"
+			},
+			text: "王者荣耀各类型英雄胜率",
+			type: 'pie',
+			seriesName: '英雄类别',
+			//legendData与seriesData相关联
+			legendData: ['打野', '肉', '辅助', '射手', '法师'],
+			seriesData: [
+							{value: 20, name: '打野'},
+							{value: 30, name: '肉'},
+							{value: 40, name: '辅助'},
+							{value: 50, name: '射手'},
+							{value: 60, name: '法师'},
+						  ],
+			/*series: {
+				center: ['50%', '60%']
+			}*/
+		});
+		chart.showEcharts();
+
+		//最简单的环形图
+		var chart2 = new CfyCharts('main2', {
+			tooltip: {
+				trigger: 'item',
+				formatter: "{a} <br/>{b} : {c} ({d}%)"
+			},
+			text: "王者荣耀各类型英雄胜率",
+			type: 'pie',
+			seriesName: '英雄类别',
+			legendData: ['打野', '肉', '辅助', '射手', '法师'],
+			seriesData: [
+				{value: 20, name: '打野'},
+				{value: 30, name: '肉'},
+				{value: 40, name: '辅助'},
+				{value: 50, name: '射手'},
+				{value: 60, name: '法师'},
+			],
+			series: {
+				radius: ['50%', '70%'],
+				avoidLabelOverlap: false,
+				label: {
+					normal: {
+						show: false,
+						position: 'center'
+					},
+					emphasis: {
+						show: true,
+						textStyle: {
+							fontSize: '30',
+							fontWeight: 'bold'
+						}
+					}
+				}
+
+			}
+		});
+		chart2.showEcharts();
+
+		//最简单的柱状图
+		var chart3 = new CfyCharts('main3', {
+			text: "王者荣耀各类型英雄出场次数",
+			type: 'bar',
+			tooltip: {
+
+			},
+			seriesName: '出场次数',
+			legendData: ['出场次数'],
+			seriesData: [100, 200, 300, 150, 250]
+			,
+			xAxis: {
+				data: ['打野', '肉', '辅助', '射手', '法师']
+			},
+			yAxis: {
+
+			}
+		});
+		chart3.showEcharts();
+
+		//最简单的折线图(单曲线)
+		var chart4 = new CfyCharts('main4', {
+			text: "王者荣耀各类型英雄出场次数",
+			type: 'line',
+			tooltip: {
+				trigger: 'none',
+				axisPointer: {
+					type: 'cross'
+				}
+			},
+			seriesName: '出场次数',
+			legendData: ['出场次数'],
+			seriesData: [100, 200, 300, 150, 250],
+			xAxis: {
+				type: 'category',
+				data: ['打野', '肉', '辅助', '射手', '法师'],
+				axisTick: {
+					alignWithLabel: false, //保证刻度线和标签对齐
+					interval: 0 //强制显示所有刻度
+				},
+				axisPointer: {
+					label: {
+
+						//文本标签文字的格式化器
+						formatter: function (params) { //params 包含：value轴为当前值，axis.type为category时，值为axis.data里的数值。如果aixs.type为'time,其值为时间戳';
+							return '出场次数  ' + params.value
+								+ (params.seriesData.length ? '：' + params.seriesData[0].data : '');
+						}
+					}
+				}
+			},
+			yAxis: {
+				type: 'value',
+			}
+		});
+		chart4.showEcharts();
+
+		//最简单的双曲线
+		var chart5 = new CfyCharts('doubleLine', {
+			text: "王者荣耀大乔小乔胜率走势图",
+			type: 'line',
+			tooltip: {
+				trigger: 'none',
+				axisPointer: {
+					type: 'cross'
+				}
+			},
+			seriesName: '胜率',
+			legendData: ['大乔', '小乔'],
+			series: [
+				{
+					name: '大乔',
+					type: 'line',
+					xAxisIndex: 1,
+					smooth: true,
+					data: [0.2, 0.3, 0.4, 0.6, 0.5]
+				},
+				{
+					name: '小乔',
+					type: 'line',
+					smooth: true,
+					data: [0.6, 0.7, 0.65, 0.5, 0.3]
+				}
+			],
+			xAxis: [
+				{
+					type: 'category',
+					data: ['打野', '肉', '辅助', '射手', '法师'],
+					axisTick: {
+						alignWithLabel: false, //保证刻度线和标签对齐
+						interval: 0 //强制显示所有刻度
+					},
+					axisLine: {
+						onZero: false
+					},
+					axisPointer: {
+						label: {
+
+							//文本标签文字的格式化器
+							formatter: function (params) { //params 包含：value轴为当前值，axis.type为category时，值为axis.data里的数值。如果aixs.type为'time,其值为时间戳';
+								return '胜率  ' + params.value
+									+ (params.seriesData.length ? '：' + params.seriesData[0].data : '');
+							}
+						}
+					}
+				},
+				{
+					type: 'category',
+					data: ['打野', '肉', '辅助', '射手', '法师'],
+					axisTick: {
+						alignWithLabel: false, //保证刻度线和标签对齐
+						interval: 0 //强制显示所有刻度
+					},
+					axisLine: {
+						onZero: false
+					},
+					axisPointer: {
+						label: {
+
+							//文本标签文字的格式化器
+							formatter: function (params) { //params 包含：value轴为当前值，axis.type为category时，值为axis.data里的数值。如果aixs.type为'time,其值为时间戳';
+								return '小乔  ' + params.value
+									+ (params.seriesData.length ? '：' + params.seriesData[0].data : '');
+							}
+						}
+					}
+
+				}
+			],
+			yAxis: {
+				type: 'value',
+				min: 0,
+				max: 1
+			}
+		});
+		chart5.showEcharts();
+
+		$('#change').on('click', function() {
+			var beginTime = $('#beginTime').val(),
+				endTime = $('#endTime').val(),
+			    oldData = chart.getOption().series.data,
+				returnData = [],
+				newData = getRandomArray({
+					length: oldData.length,
+					min: 1,
+					max: 100
+				});
+
+			//饼图和环形图修改series的data数据实现更改
+			for(var i = 0; i < oldData.length; i++) {
+				 oldData[i].value = newData[i];
+				 returnData.push(oldData[i]);
+			}
+
+			// 更改饼图
+			chart.updateEchartsView({
+				series: {
+					data: returnData
+				}
+			});
+
+			//更改环形图
+			chart2.updateEchartsView({
+				series: {
+					data: returnData
+				}
+			});
+			var newXaxisData = getTimeMinusArray(beginTime,endTime,{dateType: 2}),
+				xAxisLength = newXaxisData.length;
+			console.log(newXaxisData);
+			//更改柱状图
+			chart3.updateEchartsView({
+				xAxis: {
+					data: newXaxisData
+				},
+				series: {
+						data: getRandomArray({
+							length: xAxisLength,
+							min: 0,
+							max: 100
+						})
+					}
+			});
+
+			//更改曲线图
+			chart4.updateEchartsView({
+				xAxis: {
+					data: newXaxisData
+				},
+				series: {
+						data: getRandomArray({
+							length: xAxisLength,
+							min: 0,
+							max: 100
+						})
+					}
+			});
+			console.log(chart.getOption().series);
+		});
+	</script>
+	<script>
+		getTimeMinusArray(20100101,20170101,{dateType: 3});
+	</script>
+</body>
+</html>

@@ -8,54 +8,77 @@
 	<div id="main" style="width: 600px;height: 400px">
 
 	</div>
+	<form action="" class="form-inline">
+		<input type="text" class="form-control" value="20160101" id="beginTime">
+		<input type="text" class="form-control" value="20170101" id="endTime">
+	</form>
+	<button id="change">更换数据</button>
+	<h4>修改数据同饼图，此处省略……</h4>
 	<script src="echarts/echarts.js"></script>
 	<script>
 		var myChart = echarts.init(document.getElementById('main'));
-		var option = option = {
-			tooltip: {
-				trigger: 'item',
-				formatter: "{a} <br/>{b}: {c} ({d}%)"
-			},
-			legend: {
-				orient: 'vertical',
-				x: 'left',
-				data:['卷内文件','归档文件']
-			},
-			series: [
-				{
-					name:'访问来源',
-					type:'pie',
-					radius: ['50%', '70%'],
-					avoidLabelOverlap: false,
-					label: {
-						normal: {
-							show: false,
-							position: 'center'
-						},
-						emphasis: {
-							show: true,
-							textStyle: {
-								fontSize: '30',
-								fontWeight: 'bold'
-							}
-						}
-					},
-					labelLine: {
-						normal: {
-							show: false
-						}
-					},
-					data:[
-						{value:60, name:'卷内文件'},
-						{value:40, name:'归档文件'}
-					]
-				}
-			]
-		};
+		var option = {
+				title: {
+					text: '王者荣耀五种英雄胜率',
+					left: 'center'
+				},
+				tooltip: {
+					trigger: 'item',
+					formatter: "{a} <br/>{b}: {c} ({d}%)"
+				},
+				legend: {
+					orient: 'vertical',
+					left: 'left',
+					data: ['打野','肉','辅助','射手','法师']
+				},
+				series: {
+						name:'英雄类别',
+						type:'pie',
+						//roseType: 'radius',
+						radius: ['50%', '70%'],
 
+						//是否启用防止标签重叠策略，默认开启，在标签拥挤重叠的情况下会
+						//挪动各个标签的位置，防止标签间的重叠。(在圆环图中需要强制所有标签
+						// 放在中心位置，可以将该值设为false)
+						avoidLabelOverlap: false,
+
+						//饼图图形上的文本标签，可用于说明图形的一些数据信息
+						label: {
+							normal: {
+								show: false,
+								position: 'center' //标签位置。在饼图中心位置
+							},
+
+							//鼠标移动上去的样式
+							emphasis: {
+								show: true,
+								textStyle: {
+									fontSize: '30',
+									fontWeight: 'bold'
+								}
+							}
+						},
+
+						//标签的视觉引导线样式
+						labelLine: {
+							normal: {
+								show: true
+							}
+						},
+						data:[
+								{value:60, name:'打野'},
+								{value:30, name:'肉'},
+								{value:40, name:'辅助'},
+								{value:10, name:'射手'},
+								{value:20, name:'法师'}
+							]
+						}
+				};
 
 		//使用刚指定的配置项和数据显示图标
 		myChart.setOption(option);
+
+
 	</script>
 </body>
 </html>

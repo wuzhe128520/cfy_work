@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+</head>
+<body>
+	<div id="main" style="width: 600px;height: 400px">
+
+	</div>
+	<form action="" class="form-inline">
+		<input type="text" class="form-control" value="20160101" id="beginTime">
+		<input type="text" class="form-control" value="20170101" id="endTime">
+	</form>
+	<button id="change">更换数据</button>
+	<h4>
+		tooltip.axisPointer 是配置坐标轴指示器的快捷方式。实际上坐标轴指示器的全部功能，<br>都可以通过轴上的 axisPointer 配置项完成（例如 xAxis.axisPointer 或 angleAxis.axisPointer）。但是使用 tooltip.axisPinter 在简单场景下会更方便一些。
+	</h4>
+	<p>tooltip设置为空对象，默认是没有阴影的</p>
+	<script src="../assert/js/jquery-3.2.1.min.js"></script>
+	<script src="echarts/echarts.js"></script>
+	<script src="../assert/js/moment/moment.min.js"></script>
+	<script src="../assert/js/randomNum.js"></script>
+	<script src="../assert/js/randomArray.js"></script>
+	<script src="../assert/js/timeMinusArray.js"></script>
+	<script>
+		var myChart = echarts.init(document.getElementById('main'));
+		var option = {
+			tooltip : {
+
+				//坐标轴触发，主要在柱状图,折线图等会使用类目轴的图表中使用
+				trigger: 'axis',
+				axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+					type : 'shadow',      // 默认为直线，可选为：'line' | 'shadow'
+					show: false
+				}
+			},
+			legend: {
+				data:['申请借阅','审核借阅']
+			},
+			grid: {
+					left: '1%',
+					right: '1%',
+					bottom: '1%',
+
+					//grid 区域是否包含坐标轴的刻度标签
+					containLabel: true
+				},
+			xAxis : [
+				{
+					//type : 'category',
+					data : ['周一','周二','周三','周四','周五','周六','周日']
+				}
+			],
+			yAxis : [
+				{
+					type : 'value',
+					min: 0,
+					max: 50
+				}
+			],
+			series : [
+				{
+					name:'申请借阅',
+					type:'bar',
+					data:[10, 20, 30, 8, 45, 23, 12]
+				},
+				{
+					name:'审核借阅',
+					type:'bar',
+
+					//数据堆叠，同个类目轴上系列配置相同的stack值可以堆叠放置。
+					//stack: '广告',
+					data:[21, 23, 12, 45, 47, 38, 12]
+				}
+
+			]
+		};
+
+		//使用刚指定的配置项和数据显示图标
+		myChart.setOption(option);
+
+		$(function() {
+			$('#change').on('click', function() {
+
+				var timeArray = getTimeMinusArray($('#beginTime').val(), $('#endTime').val()),
+					timeArrayLength = timeArray.length;
+
+				myChart.setOption({
+					xAxis:
+						{
+							data: timeArray,
+						},
+					series: [
+						{
+							data: getRandomArray({
+								length: timeArrayLength,
+								min: myChart.getOption().yAxis[0].min,
+								max: myChart.getOption().yAxis[0].max
+							})
+						},
+						{
+							data: getRandomArray({
+								length: timeArrayLength,
+								min: myChart.getOption().yAxis[0].min,
+								max: myChart.getOption().yAxis[0].max
+							})
+						}
+					],
+				});
+			});
+		});
+	</script>
+</body>
+</html>

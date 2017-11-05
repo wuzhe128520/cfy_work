@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>x</title>
+    <!--<script src="js/wulv5.js"></script>-->
+    <script src="js/sea.js"></script>
+</head>
+<body>
+
+<div id="box">
+    模块化开发 把整个文件分割成一个一个小文件
+
+    原理 ( 通过回调函数来处理的 )
+    1.html文件: seajs.use(1,2) 执行
+    2.插件:     模块插件 创建一个script标签 通过script把模块引入进来
+    3.插件:     定义一个全局函数define 用来获取模块里面所写的代码
+    4.模块:     模块文件里 执行define (传入一个函数)
+    5.插件:     seajs.use插件 执行上一步的函数 并且传入3个参数
+    6.          再执行模块里传入的参数过程中 改变了module
+    7.插件里:   执行回调, 插件的第二个参数 并且传入module.exports
+    8.html:     接收module.exports
+</div>
+
+
+</body>
+</html>
+<script>
+    // 1. 路径
+    // 2. 回调( 在js文件里定义的module.exports 所定义的会传入到回调里的参数 )
+    seajs.use("./js/mokuai2.js", function (goudan) {
+      console.log(goudan);
+      console.log(goudan("box"));
+    })
+
+
+
+//    wulv5("./js/mokuai2.js",function (goudan) {
+//      console.log(goudan);
+//    })
+
+</script>
