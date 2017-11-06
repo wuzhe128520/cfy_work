@@ -27,273 +27,262 @@
     <link rel="stylesheet" href="../assert/js/bootstrap/dist/css/bootstrap.min.css">
 </head>
 <body>
-<div class="container">
-    <div class="row">
-        <div class="col-md-6 col-md-offset-2">
-            <div style="width:100%;margin: 0 auto;overflow: hidden;" >
-                <img src="images/test.jpg" alt="" id="image">
-            </div>
-            <div class="wrapper" style="text-align: center;">
-                <button id="beginCrop">获取裁剪图片</button>
-                <button id="zoomOut">放大</button>
-                <button id="zoomIn">缩小</button>
-                <button id="reset">还原</button>
-            </div>
-            <div class="container-fluid">
-                <div class="row">
-                    <h5>预览：</h5>
-                        <div class="col-md-12">
-                            <div class="col-md-6">
-                                <div class="preview"></div>
+    <pre>
+        1、滚轮缩放和按钮缩放起冲突
+    </pre>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-2">
+                <div style="width:100%;margin: 0 auto;overflow: hidden;" >
+                    <img src="images/test.jpg" alt="" id="image">
+                </div>
+                <div class="wrapper" style="text-align: center;">
+                    <button id="beginCrop">获取裁剪图片</button>
+                    <button id="zoomOut">放大</button>
+                    <button id="zoomIn">缩小</button>
+                    <button id="rotateLeft">左旋转</button>
+                    <button id="rotateRight">右旋转</button>
+                    <button id="reset">还原</button>
+                    <button id="enable">开启</button>
+                    <button id="disable">关闭</button>
+                </div>
+                <div class="container-fluid">
+                    <div class="row">
+                        <h5>预览：</h5>
+                            <div class="col-md-12">
+                                <div class="col-md-6">
+                                    <div class="preview"></div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="preview"></div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="preview"></div>
+                                </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="preview"></div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="preview"></div>
-                            </div>
-                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-4">
-            <h5>裁剪结果：</h5>
-            <div id="result"></div>
+            <div class="col-md-4" id="cropResult">
+                <h5>裁剪结果：</h5>
+                <div id="result" style="width: auto;"></div>
+                <button style="display: none;" id="saveToLocal">保存到本地</button>
+            </div>
         </div>
     </div>
-</div>
-<p>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <p>
+                    <input type="file" id="file" value="选择图片">
+                </p>
+                <div>
+                    <h5>`预览</h5>
+                    <div id="h5-preview" style="min-width: 300px;min-height: 300px;border: 1px solid red;">
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+    </div>
+    <p>
+
+        1、裁剪的宽高继承自图片的父元素(必须是可见的块级元素)
+        2、输出的裁剪数据时机遇原始图片的大小，因此你可以使用他们直接裁剪图片
+        3、裁剪跨源的图像，需要确保浏览器支持cors设置属性，后台需要设置跨域
+
+    </p>
+    <pre>
+            一、设置参数
+            1、单个对象设置：$('img').cropper(options);覆盖全局默认设置: $.fn.cropper.setDefaults(options);
+            2、viewMode
+                值： 0、没有限制
+                     1、限制裁剪框不能超过canvas大小的范围
+                     2、使用最小的canvas大小来适应外层容器
+                     3、强制canvas填满容器
+            3、dragMode 拖拽模式
+            crop: 创建一个新的裁剪框
+            move: 移动canvas
+            none: 什么都不做
+
+            3、aspectRatio
+            设置裁剪框的宽高比，默认不限制宽高比
+
+            4、data
+            自动将之前裁剪的已保存的数据传递给setData()方法。
+
+            5、preview
+            增加一个额外的元素用于预览;
+            note: 1、最大宽度是preview容器的初始宽度
+                  2、最大高度，，，同上
+                  3、如果设置了aspectRatio选项，确保也给preview容器设置一样的aspectRatio(宽高比)
+                  4、如果preview没有正确展示，给preview的容器设置: overflow: hidden;
+
+            6、responsive
+            当窗口改变时，重新渲染裁剪框
+
+            7、restore
+            在窗口改变后，恢复裁剪框区域
+
+            8、checkCrossOrigin
+            检查当前图片是否是跨域的图片。如果是的话，在克隆图片时候，将会给克隆的图片元素加上 crossOrigin属性;为了避免浏览器缓存错误，在重新加载图片资源时，会给src属性加上一个时间戳
+
+            9、modal
+            在图片之上，裁剪框之下，显示一个黑色模态框
+
+            10、guides(boolean)
+            在裁剪框上显示虚线
+
+            11、center(boolean)
+            在裁剪框显示中央指示器
+
+            12、highlight(boolean)
+            在裁剪框上显示白色的模态框
+
+            13、background(boolean)
+            显示容器的网格背景色
 
-    1、裁剪的宽高继承自图片的父元素(必须是可见的块级元素)
-    2、输出的裁剪数据时机遇原始图片的大小，因此你可以使用他们直接裁剪图片
-    3、裁剪跨源的图像，需要确保浏览器支持cors设置属性，后台需要设置跨域
+            14、autoCrop
+            在初始化的时候启用裁剪图片(将会显示裁剪框等)
 
-</p>
-<p>
-<ul>
-    <li>
-        一、设置参数
-        1、单个对象设置：$('img').cropper(options);覆盖全局默认设置: $.fn.cropper.setDefaults(options);
-        2、viewMode
-            值： 0、没有限制
-                 1、限制裁剪框不能超过canvas大小的范围
-                 2、使用最小的canvas大小来适应外层容器
-                 3、强制canvas填满容器
-        3、dragMode 拖拽模式
-        crop: 创建一个新的裁剪框
-        move: 移动canvas
-        none: 什么都不做
+            15、autoCropArea
+            0到1之间的数字，定义自动裁剪区域的大小(百分比)
 
-        3、aspectRatio
-        设置裁剪框的宽高比，默认不限制宽高比
+            16、movable
+            是否启用移动图片的功能
 
-        4、data
-        自动将之前裁剪的已保存的数据传递给setData()方法。
+            17、scalable
+            是否启用图片缩放
 
-        5、preview
-        增加一个额外的元素用于预览;
-        note: 1、最大宽度是preview容器的初始宽度
-              2、最大高度，，，同上
-              3、如果设置了aspectRatio选项，确保也给preview容器设置一样的aspectRatio(宽高比)
-              4、如果preview没有正确展示，给preview的容器设置: overflow: hidden;
+            18、zoomable
+            缩放？？？
 
-        6、responsive
-        当窗口改变时，重新渲染裁剪框
+            19、zoomOnTouch
+            是否启用触摸屏拖拽缩放图片
 
-        7、restore
-        在窗口改变后，恢复裁剪框区域
+            20、zoomOnWheel
+            是否启用滚轮缩放图片
 
-        8、checkCrossOrigin
-        检查当前图片是否是跨域的图片。如果是的话，在克隆图片时候，将会给克隆的图片元素加上 crossOrigin属性;为了避免浏览器缓存错误，在重新加载图片资源时，会给src属性加上一个时间戳
+            21、wheelZoomRatio
+            定义滚轮时的比例
 
-        9、modal
-        在图片之上，裁剪框之下，显示一个黑色模态框
+            22、cropBoxMovable
+            是否启用拖拽移动裁剪框
 
-        10、guides(boolean)
-        在裁剪框上显示虚线
+            23、cropBoxResizable
+            是否启用拖拽拉伸裁剪框
 
-        11、center(boolean)
-        在裁剪框显示中央指示器
+            24、toggleDragModeOnDblclick
+            在裁剪时双击在crop和move模式之间切换
 
-        12、highlight(boolean)
-        在裁剪框上显示白色的模态框
+            二、方法
+            1、ready
+            由于加载图片是一个异步操作，除了setAspectRatio()，replace()和destory() 这几个方法外，
+            大部分的方法都应该在ready方法后去调用。
+            $().cropper({
+                ready: function() {
+                    $().cropper('method',arg01, arg02,.....);
+                }
 
-        13、background(boolean)
-        显示容器的网格背景色
+            });
 
-        14、autoCrop
-        在初始化的时候启用裁剪图片(将会显示裁剪框等)
+            2、crop()
+            手动的显示裁剪框
+            $().cropper({
+                autoCrop: false,
+                ready: function() {
+                    $(this).cropper('crop');
+                }
+            });
 
-        15、autoCropArea
-        0到1之间的数字，定义自动裁剪区域的大小(百分比)
+            3、reset()
+            重置图片和裁剪框到初始化状态
 
-        16、movable
-        是否启用移动图片的功能
+            4、clear()
+            清除裁剪框
 
-        17、scalable
-        是否启用图片缩放
+            5、replace(url, onlyColorChanged);
+            替换图片的路径重新创建裁剪框
 
-        18、zoomable
-        缩放？？？
+            6、enable()
+            启用cropper插件功能
 
-        19、zoomOnTouch
-        是否启用触摸屏拖拽缩放图片
+            7、disable()
+            禁用cropper插件功能
 
-        20、zoomOnWheel
-        是否启用滚轮缩放图片
+            8、destory()
+            销毁cropper同时移除图片的实例对象
 
-        21、wheelZoomRatio
-        定义滚轮时的比例
+            9、move(offsetX, offsetY)
+            使用相对偏移量，移动图片的容器
 
-        22、cropBoxMovable
-        是否启用拖拽移动裁剪框
+            10、moveTo(x,y);
+            使用绝对位置点的坐标移动图片容器
 
-        23、cropBoxResizable
-        是否启用拖拽拉伸裁剪框
+            11、zoom(ratio)
+            使用相对比率缩放图片容器(canvas)
+            $('img').cropper('zoom', 0.1); //将图片放大为原来的0.1倍。也就是原图乘以 1.1;
 
-        24、toggleDragModeOnDblclick
-        在裁剪时双击在crop和move模式之间切换
+            12、zoomTo(ratio);
+            使用绝对比率值缩放canvas(图片容器)
+            $('img').cropper('zoom', 1.3); //将图片放大到1.3倍
 
-        二、方法
-        1、ready
-        由于加载图片是一个异步操作，除了setAspectRatio()，replace()和destory() 这几个方法外，
-        大部分的方法都应该在ready方法后去调用。
-        $().cropper({
-            ready: function() {
-                $().cropper('method',arg01, arg02,.....);
-            }
+            13、getData([rounded]); //参数可选
+            获取最终裁剪区域的位置和大小数据(基于原始图片的实际尺寸)
 
-        });
+            14、setData(data); //与上面相反
+            这个方法仅在viewMode参数的值大于等于1时候有用
 
-        2、crop()
-        手动的显示裁剪框
-        $().cropper({
-            autoCrop: false,
-            ready: function() {
-                $(this).cropper('crop');
-            }
-        });
+            15、getContainerData()
+            获取容器的大小数据
 
-        3、reset()
-        重置图片和裁剪框到初始化状态
+            16、getImageData()
+            获取图片位置、大小以及其他相关的数据
 
-        4、clear()
-        清除裁剪框
+            17、getCanvasData()
+            获取canvas(图片的外围包裹容器)位置和大小的数据
 
-        5、replace(url, onlyColorChanged);
-        替换图片的路径重新创建裁剪框
+            18、getCropBoxData()
+            获取裁剪框的位置和大小数据
 
-        6、enable()
-        启用cropper插件功能
+            19、setCropBoxData() //参考上面方法
 
-        7、disable()
-        禁用cropper插件功能
+            20、setAspectRatio(aspectRatio)
+            改变裁剪框的宽高比
 
-        8、destory()
-        销毁cropper同时移除图片的实例对象
+            21、setDragMode(mode);
+            改变拖拽模式
+            tip: 双击cropper时，可以在move和crop模式之间切换。
 
-        9、move(offsetX, offsetY)
-        使用相对偏移量，移动图片的容器
+            三、事件
+            1、ready
+            在cropper实例构建完成时触发
 
-        10、moveTo(x,y);
-        使用绝对位置点的坐标移动图片容器
+            2、cropstart
+            在canvas(图片容器)或裁剪框开始改变之前触发
 
-        11、zoom(ratio)
-        使用相对比率缩放图片容器(canvas)
-        $('img').cropper('zoom', 0.1); //将图片放大为原来的0.1倍。也就是原图乘以 1.1;
+            3、cropmove
+            当canvas(图片容器)裁剪框正在改变时触发
 
-        12、zoomTo(ratio);
-        使用绝对比率值缩放canvas(图片容器)
-        $('img').cropper('zoom', 1.3); //将图片放大到1.3倍
+            4、cropend
+            在canvas(图片容器)或裁剪框停止改变时触发
 
-        13、getData([rounded]); //参数可选
-        获取最终裁剪区域的位置和大小数据(基于原始图片的实际尺寸)
+            5、crop(event)
+            当canvas(图片容器)或裁剪框改变后触发
 
-        14、setData(data); //与上面相反
-        这个方法仅在viewMode参数的值大于等于1时候有用
+            6、zoom(event)
+            当一个裁剪实例开始放大或缩小canvas(图片容器)时触发
 
-        15、getContainerData()
-        获取容器的大小数据
+            四、no conflict
+            $.fn.cropper.noConflict();避免重命名
 
-        16、getImageData()
-        获取图片位置、大小以及其他相关的数据
-
-        17、getCanvasData()
-        获取canvas(图片的外围包裹容器)位置和大小的数据
-
-        18、getCropBoxData()
-        获取裁剪框的位置和大小数据
-
-        19、setCropBoxData() //参考上面方法
-
-        20、setAspectRatio(aspectRatio)
-        改变裁剪框的宽高比
-
-        21、setDragMode(mode);
-        改变拖拽模式
-        tip: 双击cropper时，可以在move和crop模式之间切换。
-
-        三、事件
-        1、ready
-        在cropper实例构建完成时触发
-
-        2、cropstart
-        在canvas(图片容器)或裁剪框开始改变之前触发
-
-        3、cropmove
-        当canvas(图片容器)裁剪框正在改变时触发
-
-        4、cropend
-        在canvas(图片容器)或裁剪框停止改变时触发
-
-        5、crop(event)
-        当canvas(图片容器)或裁剪框改变后触发
-
-        6、zoom(event)
-        当一个裁剪实例开始放大或缩小canvas(图片容器)时触发
-
-        四、no conflict
-        $.fn.cropper.noConflict();避免重命名
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    </li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-</ul>
-</p>
+    </pre>
 
     <script src="../assert/js/jquery-3.2.1.min.js"></script>
     <script src="cropper-3.1.3/dist/cropper.min.js"></script>
     <script>
-        $('#beginCrop').on('click', function() {
 
-            var croppedImg = $image.cropper('getCroppedCanvas');//获取裁剪图片的canvas数据
-            $('#result').html('<img src="' + croppedImg.toDataURL() + '"/>')
-        });
         var $image = $('#image'),
             $previews = $('.preview');
 
@@ -302,7 +291,7 @@
             //设置裁剪范围的长宽比
             aspectRatio: 1,
             autoCrop: true,
-            viewMode: 3,
+            viewMode: 1,
             ready: function() {
                 //$(this).cropper('crop');//显示自动裁剪
 
@@ -349,8 +338,8 @@
             maxScaleRatio = 2,  //最大缩放2倍
             initialScaleRatio = 1, //图片初始倍数
             currentScaleRatio = 1, //当前图片的缩放倍数,
-            isMaxStatus = false,    //当前图片是否时放大状态
-            isMinStatus = false,    //当前图片是否是缩小状态
+           /* isMaxStatus = false,    //当前图片是否时放大状态
+            isMinStatus = false,    //当前图片是否是缩小状态*/
             isScaleMax = true,     //是否继续放大
             isScaleMin = true;     //是否继续缩小
 
@@ -410,6 +399,16 @@
             }
         });
 
+        //获取裁剪图片
+        $('#beginCrop').on('click', function() {
+
+            var croppedImg = $image.cropper('getCroppedCanvas');//获取裁剪图片的canvas数据
+            $('#result').html('<img src="' + croppedImg.toDataURL() + '"/>');
+            if($('#saveToLocal').is(':hidden')) {
+                $('#saveToLocal').show();
+            }
+        });
+
         //重置图片为初始状态
         $('#reset').on('click', function() {
             $image.cropper('reset');
@@ -418,6 +417,86 @@
             isScaleMax = true;
             isScaleMin = true;
         });
+
+        //旋转
+        $('#rotateLeft').on('click', function() {
+            $image.cropper('rotate', -45);
+        });
+        $('#rotateRight').on('click', function() {
+            $image.cropper('rotate', 45);
+        });
+
+        //开启和禁用裁剪
+        $('#enable').on('click', function() {
+            $image.cropper('enable');
+        });
+
+        $('#disable').on('click', function() {
+            $image.cropper('disable');
+        });
+
+        //保存到本地
+        $('#cropResult').on( 'click','#saveToLocal', function() {
+            alert('保存成功！');
+        });
+
+        $('#file').on('click', function() {
+            previewImg();
+        });
+
+        /*=== h5预览图片 ===*/
+        function previewImg() {
+            var t = $("#file").get(0).files[0];
+            var $img =$('<img />');
+            $img.prop("src", window.URL.createObjectURL(t)).appendTo($('#h5-preview'));
+        }
+
+       /* upload: {
+            previewImg: function() {
+                var t = $("#file").get(0).files[0];
+                return $("#preview").prop("src", window.URL.createObjectURL(t)),
+                    t
+            },
+            h5AjaxUpload: function() {
+                var t = $("#file").get(0).files[0],
+                    e = new FormData,
+                    o = this;
+                e.append("file", t),
+                    comm.ajax.commAjax({
+                        url: "/upload",
+                        type: "post",
+                        data: e,
+                        processData: !1,
+                        contentType: !1,
+                        xhr: function() {
+                            var t = $.ajaxSettings.xhr();
+                            if (t.upload) return t.upload.addEventListener("progress", o.onprogress, !1),
+                                t
+                        },
+                        successFn: function(t) {
+                            t.status && $("#imgSrc").val(t.pic)
+                        }
+                    })
+            },
+            onprogress: function(t) {
+                var e = t.loaded,
+                    o = t.total,
+                    n = $("#progress"),
+                    a = $("#progressbar"),
+                    r = Math.round(100 * e / o);
+                a.is(":hidden") && a.show(),
+                    n.html(r + "%").css("width", r + "%"),
+                r >= 1 && setTimeout(function() {
+                        n.html("0%").css("width", 0),
+                            a.hide()
+                    },
+                    2e3)
+            }
+        },*/
+        /*=== h5预览图片 ===*/
+
+
+
 
     </script>
 </body>

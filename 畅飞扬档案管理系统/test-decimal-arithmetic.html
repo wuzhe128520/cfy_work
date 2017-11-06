@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>使用bigNumber.js计算浮点数</title>
+    <script src="assert/js/bignumber.js-master/bignumber.min.js"></script>
+</head>
+<body>
+    <script>
+        //import BigNumber from "./assert/js/bignumber.js-master/bignumber";
+
+        var x = new BigNumber(0.3);
+
+        //minus相减
+        var y = x.minus(0.1);
+        console.log(y.toNumber());  //0.2
+
+        var m = new BigNumber(999);
+        console.log(m.minus(888).toNumber());//得到js的原始数值类型 111
+
+        //plus相加
+        var n = new BigNumber(0.2);
+        console.log(n.plus(0.123456).toNumber()); //0.323456
+
+        //times乘以
+        var q = new BigNumber(3.68);
+        console.log(q.times(3.99).toNumber());
+
+        //除以
+        var o = new BigNumber(3.14*2);
+        console.log(o.dividedBy(3.14).toNumber());
+
+        //取余
+        var p = new BigNumber(10);
+        console.log(p.modulo(3.14).toNumber());
+
+        //平方根
+        var a = new BigNumber(16);
+        console.log(a.squareRoot().toNumber());
+
+        //保留 小数位 toFixed('保留几位小数','保留的模式')
+        var b = new BigNumber(0.56875623);
+        console.log(b.toFixed(4,7).valueOf());//这里用toNumber()会报错，它是一个字符串，不是一个bigNumber实例
+
+        //移动小数点
+        var c = new BigNumber(0.585876);
+        console.log(c.shift(3).toNumber());
+
+        //取反(正数变为负数，负数变为正数)
+        var d = new BigNumber(-1.5);
+        console.log(d.negated().toNumber());
+
+        //返回有效数字的个数
+        var e = new BigNumber(0.0223);
+        console.log(e.precision()); //3
+        var f = new BigNumber(233660000);
+        console.log(f.precision()); //5
+        console.log(f.precision(true)); //9
+
+
+        //toDigits(sd, rm) 返回一个实例，其值为保留sd个有效数字后根据rm(舍入模式)舍入后的值;
+        //保留有效数字并按照舍入模式进行取舍
+        var g = new BigNumber(9876.54321);
+        console.log(g.toDigits(6, BigNumber.ROUND_UP).toNumber()); //BigNumber.Round_FlOOR 为舍入模式
+
+        //toFraction() 转换为分数；返回 字符串数组 ['7', '4']
+        var h = new BigNumber(1.75);
+        console.log(h.toFraction());
+
+        //小数取整(直接舍弃小数部分)
+        var i = new BigNumber(123.456789101112);
+        console.log(i.truncated().toNumber());
+
+        //大数字 格式化 toFormat('小数位', '取舍模式') //
+        var format = {
+            decimalSeparator: '.',  //小数分隔符
+            groupSeparator: ',',  //组分割符
+            groupSize: 3,  //组的个数
+            secondaryGroupSize: 0, //
+            fractionGroupSeparator: ' ',  //分数组分隔符
+            fractionGroupSize: 0  //分数组大小
+        };
+        BigNumber.config({
+            FORMAT: format
+        });
+
+        var j = new BigNumber('2345678.123');
+        console.log(j.toFormat());
+        console.log(j.toFormat(2));
+
+        //幂次方 toPower('幂次方','系数')
+        var k = new BigNumber('10');
+        console.log(k.toPower(2).toNumber());
+
+        //toPrecision('有效数字', '舍入模式')
+        var l = new BigNumber(45.6);
+        console.log(l.toPrecision());
+        console.log(l.toPrecision(1)); //5e+1(50) 当传入的第一个参数值 小于BigNumber实例的有效数字个数时，结果使用科学计数法表示
+
+        //toExponential(dp ,rm) 转换为指数形式的计数方式(科学计数法,小数点前有一位数字，以rm模式来舍入，直到小数点后只有dp个数字,)
+        var r = new BigNumber(45.66);
+        r.toExponential(1,1); //小数点后留一位，以1模式舍入
+
+    </script>
+</body>
+</html>
