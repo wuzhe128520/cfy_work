@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>测试jquery动态筛选(排序)显示插件isotope</title>
+    <link rel="stylesheet" href="assert/js/bootstrap/dist/css/bootstrap.min.css">
+    <script src="assert/js/jquery2.2.4.js"></script>
+   <!-- <script src="assert/js/jquery-3.2.1.min.js"></script>-->
+    <script src="assert/js/isotope-master/dist/isotope.pkgd.min.js"></script>
+    <style>
+        .filter-rule,
+        .color-shape {
+            width: 150px;
+            height: 200px;
+            border: 1px solid red;
+            margin: 0 0 15px 15px;
+            line-height: 200px;
+            text-align: center;
+            font-size: 24px;
+        }
+    </style>
+
+</head>
+<body>
+    <h5>1、排序案例</h5>
+    <div class="button-group sort-by-button-group">
+        <button data-sort-by="original-order">原始排序</button>
+        <button data-sort-by="name">名称排序</button>
+        <button data-sort-by="symbol">标志排序</button>
+        <button data-sort-by="number">数字排序</button>
+        <button data-sort-by="weight">重量排序</button>
+        <button data-sort-by="category">类目排序</button>
+    </div>
+    <div id="container">
+
+        <div class="element transition metal   " data-symbol="Hg" data-category="transition">
+            <p class="number">80</p>
+            <h3 class="symbol">Hg</h3>
+            <h2 class="name">Mercury</h2>
+            <p class="weight">200.59</p>
+        </div>
+
+        <div class="element metalloid   " data-symbol="Te" data-category="metalloid">
+            <p class="number">52</p>
+            <h3 class="symbol">Te</h3>
+            <h2 class="name">Tellurium</h2>
+            <p class="weight">127.6</p>
+        </div>
+
+        <div class="element post-transition metal   " data-symbol="Bi" data-category="post-transition">
+            <p class="number">83</p>
+            <h3 class="symbol">Bi</h3>
+            <h2 class="name">Bismuth</h2>
+            <p class="weight">208.9804</p>
+        </div>
+
+        <div class="element transition metal   " data-symbol="Cd" data-category="transition">
+            <p class="number">48</p>
+            <h3 class="symbol">Cd</h3>
+            <h2 class="name">Cadmium</h2>
+            <p class="weight">112.411</p>
+        </div>
+
+        <div class="element alkaline-earth metal   " data-symbol="Ca" data-category="alkaline-earth">
+            <p class="number">20</p>
+            <h3 class="symbol">Ca</h3>
+            <h2 class="name">Calcium</h2>
+            <p class="weight">40.078</p>
+        </div>
+
+        <div class="element transition metal   " data-symbol="Re" data-category="transition">
+            <p class="number">75</p>
+            <h3 class="symbol">Re</h3>
+            <h2 class="name">Rhenium</h2>
+            <p class="weight">186.207</p>
+        </div>
+
+        <div class="element post-transition metal   " data-symbol="Tl" data-category="post-transition">
+            <p class="number">81</p>
+            <h3 class="symbol">Tl</h3>
+            <h2 class="name">Thallium</h2>
+            <p class="weight">204.3833</p>
+        </div>
+
+        <div class="element metalloid   " data-symbol="Sb" data-category="metalloid">
+            <p class="number">51</p>
+            <h3 class="symbol">Sb</h3>
+            <h2 class="name">Antimony</h2>
+            <p class="weight">121.76</p>
+        </div>
+
+        <div class="element transition metal   " data-symbol="Co" data-category="transition">
+            <p class="number">27</p>
+            <h3 class="symbol">Co</h3>
+            <h2 class="name">Cobalt</h2>
+            <p class="weight">58.933195</p>
+        </div>
+
+        <div class="element lanthanoid metal inner-transition   " data-symbol="Lu" data-category="lanthanoid">
+            <p class="number">71</p>
+            <h3 class="symbol">Lu</h3>
+            <h2 class="name">Lutetium</h2>
+            <p class="weight">174.9668</p>
+        </div>
+
+        <div class="element noble-gas nonmetal   " data-symbol="Ar" data-category="noble-gas">
+            <p class="number">18</p>
+            <h3 class="symbol">Ar</h3>
+            <h2 class="name">Argon</h2>
+            <p class="weight">39.948</p>
+        </div>
+
+        <div class="element alkali metal   " data-symbol="Rb" data-category="alkali">
+            <p class="number">37</p>
+            <h3 class="symbol">Rb</h3>
+            <h2 class="name">Rubidium</h2>
+            <p class="weight">85.4678</p>
+        </div>
+
+        <div class="element other nonmetal   " data-symbol="N" data-category="other">
+            <p class="number">7</p>
+            <h3 class="symbol">N</h3>
+            <h2 class="name">Nitrogen</h2>
+            <p class="weight">14.0067</p>
+        </div>
+
+        <div class="element actinoid metal inner-transition   " data-symbol="Np" data-category="actinoid">
+            <p class="number">93</p>
+            <h3 class="symbol">Np</h3>
+            <h2 class="name">Neptunium</h2>
+            <p class="weight">(237)</p>
+        </div>
+
+        <div class="element actinoid metal inner-transition   " data-symbol="Ac" data-category="actinoid">
+            <p class="number">89</p>
+            <h3 class="symbol">Ac</h3>
+            <h2 class="name">Actinium</h2>
+            <p class="weight">(227)</p>
+        </div>
+    </div>
+    <h5>2、过滤案例</h5>
+    <p>单一过滤</p>
+    <div class="button-group filter-button-group">
+        <button data-filter="*">show all</button>
+        <button data-filter=".metal">metal</button>
+        <button data-filter=".transition">transition</button>
+        <button data-filter=".alkali, .alkaline-earth">alkali & alkaline-earth</button>
+        <button data-filter=":not(.transition)">not transition</button>
+        <button data-filter=".metal:not(.transition)">metal but not transition</button>
+    </div>
+
+    <div class="grid">
+        <div class="element-item transition metal filter-rule">1</div>
+        <div class="element-item post-transition metal filter-rule">2</div>
+        <div class="element-item alkali metal filter-rule">3</div>
+        <div class="element-item transition metal filter-rule">4</div>
+        <div class="element-item inner-transition metal filter-rule">5</div>
+        <div class="element-item alkaline-earth metal filter-rule">6</div>
+        <div class="element-item transition metal filter-rule">7</div>
+        <div class="element-item transition metal filter-rule">8</div>
+    </div>
+    <p>组合过滤</p>
+    <p>在这个例子中，所有按钮都在一个.button-group里面，每一个button-group都有一个data-filter-group</p>
+    <p>
+        在js里面这些过滤规则都存储在filters对象里，当一个按钮被点击后，它会改变这个组的过滤规则。
+    </p>
+    <p>这个对象的值会联合在一起组成一个filter过滤里</p>
+    <div id="filters">
+
+        <div class="ui-group">
+            <h3>Color</h3>
+            <div class="button-group js-radio-button-group" data-filter-group="color">
+                <button class="button is-checked" data-filter="">any</button>
+                <button class="button" data-filter=".red">red</button>
+                <button class="button" data-filter=".blue">blue</button>
+                <button class="button" data-filter=".yellow">yellow</button>
+            </div>
+        </div>
+
+        <div class="ui-group">
+            <h3>Size</h3>
+            <div class="button-group js-radio-button-group" data-filter-group="size">
+                <button class="button is-checked" data-filter="">any</button>
+                <button class="button" data-filter=".small">small</button>
+                <button class="button" data-filter=".wide">wide</button>
+                <button class="button" data-filter=".big">big</button>
+                <button class="button" data-filter=".tall">tall</button>
+            </div>
+        </div>
+
+        <div class="ui-group">
+            <h3>Shape</h3>
+            <div class="button-group js-radio-button-group" data-filter-group="shape">
+                <button class="button is-checked" data-filter="">any</button>
+                <button class="button" data-filter=".round">round</button>
+                <button class="button" data-filter=".square">square</button>
+            </div>
+        </div>
+
+    </div>
+    <div class="combine">
+        <div class="color-shape small round red">小圆红</div>
+        <div class="color-shape small round blue">小圆蓝</div>
+        <div class="color-shape small round yellow">小圆黄</div>
+        <div class="color-shape small square red">小方红</div>
+        <div class="color-shape small square blue">小方蓝</div>
+        <div class="color-shape small square yellow">小方黄</div>
+        <div class="color-shape wide round red">宽圆红</div>
+        <div class="color-shape wide round blue">宽圆蓝</div>
+        <div class="color-shape wide round yellow">宽圆黄</div>
+        <div class="color-shape wide square red">宽方红</div>
+        <div class="color-shape wide square blue">宽方蓝</div>
+        <div class="color-shape wide square yellow">宽方黄</div>
+        <div class="color-shape big round red">大圆红</div>
+        <div class="color-shape big round blue">大圆蓝</div>
+        <div class="color-shape big round yellow">大圆黄</div>
+        <div class="color-shape big square red">大方红</div>
+        <div class="color-shape big square blue">大方蓝</div>
+        <div class="color-shape big square yellow">大方黄</div>
+        <div class="color-shape tall round red">高圆红</div>
+        <div class="color-shape tall round blue">高圆蓝</div>
+        <div class="color-shape tall round yellow">高圆黄</div>
+        <div class="color-shape tall square red">高方红</div>
+        <div class="color-shape tall square blue">高方蓝</div>
+        <div class="color-shape tall square yellow">高方黄</div>
+    </div>
+    <p>
+        isotope通过filter选项能够隐藏和显示元素，匹配filter规则的项目元素将会显示，
+        不匹配的元素则会被隐藏。
+    </p>
+    <p>
+        隐藏元素最简单的方式是通过选择器，像class选择器等。例如，每一个项目元素可以
+        有几个标识的class类: transition,metal,lanthanoid,alkali,等等……
+    </p>
+    <h5>一、配置项</h5>
+    <p>1、getSortData</p>
+    <p>
+        当配置了getSortData选项时，isotope从html结构里面读取数据。
+        getSortData是一个对象，它的keys(键)是用来排序的关键字，它的值可能是
+        一个简短的字符串或者是一个重新计算值的函数。
+    </p>
+    <p>2、sortBy</p>
+    <p>对于所有在getSortData选项设置的属性，isotope都能用sortBy来排序。sortBy
+        的值需要与getSortData的key(键名)一致</p>
+    <p>多条件排序</p>
+    <p>将sortBy设置为数组，可以通过多个属性来排序。</p>
+    <p>例如：sortBy:['color','number'];将会先使用color排序，然后再根据number排序</p>
+    <p>sortAscending</p>
+    <p>默认情况下，isotope升序排序：A、B、C 和 1,2,3;如果需要降序，将sortAscending设置为false;</p>
+    <p>
+        sortAscending也可以设置成object，所以，你能够设置每一个sortBy的值的升降序的规则
+        <code>
+            $gird.isotope({
+                name: true,
+                weight: false,
+                category: true,
+                number: false,
+            });
+        </code>
+    </p>
+    <p>updateSortData()修改排序数据</p>
+    <p>
+        当项目元素发生改变后为了修改排序数据，可以使用updateSortData()
+    </p>
+    <p>
+        <code>
+            $grid.isotope('updateSortData').isotope();
+        </code>
+    </p>
+    <p>3、UI</p>
+    <p>
+        <code>
+            &lt;div class="button-group sort-by-button-group"&gt;
+            &lt;button data-sort-by="original-order">&lt;/button&gt;
+            &lt;button data-sort-by="name">&lt;/button&gt;
+            &lt;button data-sort-by="symbol">&lt;/button&gt;
+            &lt;button data-sort-by="number">&lt;/button&gt;
+            &lt;button data-sort-by="weight">&lt;/button&gt;
+            &lt;button data-sort-by="category">&lt;/button&gt;
+            &lt;/div&gt;
+        </code>
+    </p>
+    <p>
+        每一个button的data-sort-by属性里都设置了一个sortBy的值。当一个button倍点击后
+        我们能使用那个值。
+    </p>
+    <p>
+        <code>
+            var $grid = $grid.istotpe({
+                getSortData: {
+                    name: '.name',
+                    symbol: '.symbol',
+                    number: '.number parseInt',
+                    category: '[data-category]',
+                    weight: function(itemElem) {
+                        var weight = $(itemElem).find('.weight').text();
+                        return parseFloat(weight.replace(/[\(\)]/g, ''));
+                    }
+                }
+            });
+            $('.sort-by-button-group').on('click', 'button', function() {
+                var sortByValue = $(this).attr('data-sort-by');
+                $grid.isotope({sortBy: sortByValue});
+            });
+        </code>
+    </p>
+    <h5>瀑布流布局</h5>
+    <style>
+        .grid-item {
+            float: left;
+            width: 100px;
+            height: 100px;
+            background: #e6e5b4;
+            border: 2px solid #b6b5b4;
+        }
+        .grid-item-width {
+            width: 200px;
+        }
+        .grid-item-height {
+            height: 200px;
+        }
+        .grid {
+            background: #DDD;
+            max-width: 1200px;
+        }
+
+        /* clear fix */
+        .grid:after {
+            content: '';
+            display: block;
+            clear: both;
+        }
+
+    </style>
+
+    <div class="layout">
+        <div class="grid-item grid-item-width">1</div>
+        <div class="grid-item grid-item-height">2</div>
+        <div class="grid-item">3</div>
+        <div class="grid-item">4</div>
+        <div class="grid-item grid-item-width grid-item-height">5</div>
+        <div class="grid-item grid-item-width">6</div>
+        <div class="grid-item grid-item-width">7</div>
+        <div class="grid-item grid-item-height">8</div>
+        <div class="grid-item">9</div>
+        <div class="grid-item grid-item-width">10</div>
+        <div class="grid-item grid-item-height">11</div>
+        <div class="grid-item">12</div>
+        <div class="grid-item">13</div>
+    </div>
+
+    <script>
+        $(function() {
+
+            $('#container').isotope({
+                // options...
+                itemSelector: '.element',
+
+                //瀑布流
+                masonry: {
+                    columnWidth: 200
+                },
+                getSortData: {
+                    name: '.name',
+                    symbol: '.symbol',
+                    number: '.number parseInt',
+                    category: '[data-category]',
+                    weight: function(itemElem) {
+                        var weight = $(itemElem).find('.weight').text();
+                        return parseFloat(weight.replace(/[\(\)]/g, ''));
+                    }
+                }
+            });
+
+            $('.sort-by-button-group').on('click', 'button', function() {
+                var sortByValue = $(this).attr('data-sort-by');
+                $('#container').isotope({ sortBy: sortByValue });
+            });
+
+            //单一过滤
+            $('.grid').isotope();
+
+            $('.filter-button-group').on('click', 'button', function(){
+                var filterValue = $(this).attr('data-filter');
+                $('.grid').isotope({ filter: filterValue });
+            });
+
+            //组合过滤
+            var filters = {};
+            function concatValues( obj ) {
+                var value = '';
+                for ( var prop in obj ) {
+                    value += obj[ prop ];
+                }
+                return value;
+            }
+            $('.combine').isotope();
+            $('.button-group').on('click', '.button', function() {
+                var $this = $(this);
+                var $buttonGroup = $this.parents('.button-group');
+                var filterGroup = $buttonGroup.attr('data-filter-group');
+                filters[ filterGroup ] = $this.attr('data-filter');
+                var filterValue = concatValues( filters );
+                $('.combine').isotope({ filter: filterValue });
+            });
+
+            $('.layout').isotope({
+                itemSelector: '.grid-item',
+                masonry: {
+                    columnWidth: 100
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+{
+  "name": "test-demo",
+  "version": "1.0.0",
+  "description": "测试demo",
+
+  "devDependencies": {
+    "browser-sync": "^2.18.8",
+    "gulp": "^3.9.1",
+    "gulp-changed": "latest",
+    "gulp-clean": "^0.3.2",
+    "gulp-clean-css": "^3.0.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-css-spriter": "^0.4.0",
+    "gulp-jscs": "^4.0.0",
+    "gulp-jshint": "^2.0.4",
+    "gulp-less": "^3.3.0",
+    "gulp-livereload": "^3.8.1",
+    "gulp-load-plugins": "^1.5.0",
+    "gulp-minify-html": "^1.0.6",
+    "gulp-rename": "^1.2.2",
+    "gulp-rev": "^8.0.0",
+    "gulp-rev-collector": "latest",
+    "gulp-rev-replace": "^0.4.3",
+    "gulp-uglify": "latest",
+    "gulp-useref": "^3.1.2",
+    "gulp-watch": "^4.3.11"
+  }
+}
