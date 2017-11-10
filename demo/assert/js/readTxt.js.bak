@@ -18,9 +18,8 @@ var readTxt = (function(w) {
 	//常量
     var __DEFAULT__ = {
     	exp: {
-    		trim: /\//g, //匹配'/'
-		    rn: /;.*\r\n/g, //匹配 *.换行,
-            space: /^\s+|\s+$/g  //匹配首位空格
+    		trim: /\s/, //匹配空格
+		    rn: /\r\n/g //匹配换行
 	    },
 	    errorMsg: {
     		readError: "读取文件出错！",
@@ -37,7 +36,7 @@ var readTxt = (function(w) {
 	    //存储所有行的数据的数组
 	    vals = [];
 
-	function read(file, successFn, beforeFn, isShowProgress, rowSeparator, cellSeparator) {
+	function read(file, successFn, beforeFn, isShowProgress) {
 
 		var reader = new FileReader();
 
@@ -48,16 +47,16 @@ var readTxt = (function(w) {
 
 		//读取中触发(读取进度)
 		reader.onprogress = function(e) {
+			debugger;
 			if(typeof isShowProgress === 'boolean' && isShowProgress) {
 				var loaded = e.loaded,
 					total = e.total,
 				    percent = parseFloat(loaded/total).toFixed(2);
-					showProgress(percent,progressId);
+					showProgress(percent);
 			}
 		};
 
-		function showProgress(p, progressId) {
-		    var progress = document.getElementById(progressId);
+		function showProgress(p) {
 			progress.style.display = 'block';
 			percent.style.width = p*100 +'%';
 			percent.innerHTML = p*100 +'%';
@@ -90,7 +89,7 @@ var readTxt = (function(w) {
 
 	//过滤数组空元素
 	read.removeAryEmptyEle = function(ary) {
-        debugger;
+
 		if(!this.isArray( ary )) {
 			throw new Error(ary + "必须是一个数组");
 		}
@@ -101,11 +100,6 @@ var readTxt = (function(w) {
 		});
 
 	};
-
-	//清除首位空格
-	read.trim = function(str) {
-	    return str.replace(__DEFAULT__.exp.space,'');
-    };
 
 	//获取txt解析后的每一行的单个对象
 	read.getTxtObj = function(ary) {
@@ -126,7 +120,6 @@ var readTxt = (function(w) {
 
 	//将txt数据转换为数组形式
 	read.parseTxtToAry = function(txtData) {
-		debugger;
 		//分析行数据;
 		var rowsAry = read.removeAryEmptyEle(txtData.split(__DEFAULT__.exp.rn)),
 
@@ -138,15 +131,10 @@ var readTxt = (function(w) {
 
 		for(var i = 1,length = rowsAry.length; i < length; i++ ){
 			var row = rowsAry[i],
-			    valAry =  row.split( __DEFAULT__.exp.trim );
+			    valAry =  read.removeAryEmptyEle(row.split( __DEFAULT__.exp.trim ));
 
 			if(valAry.length > 0) {
-
-			    //去除每个单元格值的空格
-                valAry = valAry.map(function( item ){
-                    return read.trim( item );
-                });
-				vals.push( valAry );
+				vals.push(valAry);
 			}
 		}
 
@@ -155,6 +143,7 @@ var readTxt = (function(w) {
 				//需要判断obj是否为空
 				ary.push(obj);
 		}
+		//分析列数据
 		return ary;
 	};
 

@@ -24,7 +24,7 @@ function readExcel ( file, callback ) {
 				}),
 				persons = [];
 		} catch (e) {
-			comm.layer.alert("读取错误，文件类型不正确！")
+			comm.layer.alert("读取错误，文件类型不正确！");
 			return;
 		}
 
