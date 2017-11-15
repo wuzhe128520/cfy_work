@@ -1,0 +1,89 @@
+<HTML>
+<HEAD>
+    <meta charset="utf-8" />
+    <TITLE>Set Pixel Type and Bit-Depth JavaScript Sample</TITLE>
+    <SCRIPT ID=clientEventHandlersJS LANGUAGE=javascript>
+        function Twain_OnPostTransfer() {
+            debugger;
+            var timeStamp = new Date().getTime();
+            frmSample.Twain.CloseSource();
+
+            var isSuccess = frmSample.Twain.SaveAsBMP("c:\\"+timeStamp+".bmp");
+            if(!isSuccess && frmSample.IfThrowException) {
+                alert(frmSample.errorString);
+            }
+            frmSample.imgAcquiredImage.src = "c:\\"+timeStamp+".bmp";
+        }
+
+        function btnAcquire_onclick() {
+            frmSample.Twain.SelectSource();
+            frmSample.Twain.OpenSource();
+
+
+            switch (frmSample.sltColor.value){
+                case "1":
+                    intPixelType = 0;		//Black and White
+                    intColorDepth = 1;		//1 bit
+                    break;
+                case "2":
+                    intPixelType = 1;		//gray
+                    intColorDepth = 8;		//8 bit
+                    break;
+                case "3":
+                    intPixelType = 2;		//color
+                    intColorDepth = 24;		//24 bit
+                    break;
+            }
+
+
+            frmSample.Twain.PixelType= intPixelType;	//Set ICAP_PIXELTYPE(像素类型)
+
+            frmSample.Twain.BipDepth = intColorDepth;	//Set ICAP_BITDEPTH(色彩深度)
+
+
+            //ready to acquire image
+            frmSample.Twain.IfShowUI = false;
+            frmSample.Twain.EnableSource();
+
+        }
+
+        //-->
+    </SCRIPT>
+
+    <SCRIPT LANGUAGE=javascript FOR=Twain EVENT=OnPostTransfer>
+
+        Twain_OnPostTransfer()
+
+    </SCRIPT>
+</HEAD>
+<BODY>
+<p>
+    使用的是破解版本的Dynamic TWAIN ActiveX 3.0版本,只适用于ie版本浏览器，且用户必须允许ie使用active控件。
+</p>
+<FORM id = frmSample>
+
+    <img id = imgAcquiredImage src = "Dynamic TWAIN.jpg" height = 230 width = 200 border = 1><BR>
+    Bit-Depth:
+    <SELECT id = sltColor>
+        <OPTION VALUE="1">1 Bit BW
+        <OPTION VALUE="2">8 Bit Gray(8位灰度)
+        <OPTION VALUE="3" SELECTED>24 Bit Color(24位彩色)</OPTION>
+    </SELECT> <BR>
+    <input id = btnAcquire type="button" value="扫描" LANGUAGE=javascript onclick="return btnAcquire_onclick()">
+    <p>
+        Dynamic TWAIN is also available, which has many features designed specifically for WWW applications.
+        Please visit www.DynamSoft.com for detailed information.
+        <object classid="clsid:650879D6-AF38-4852-A1CC-D2ED4699684D" width="14" height="14" id="Twain">
+            <param name="_cx" value="847">
+            <param name="_cy" value="847">
+            <param name="JpgQuality" value="80">
+            <param name="Manufacturer" value="DynamSoft Corporation">
+            <param name="ProductFamily" value="Dynamic TWAIN">
+            <param name="ProductName" value="Dynamic TWAIN">
+            <param name="VersionInfo" value="Dynamic TWAIN 2.1">
+            <param name="TransferMode" value="0">
+        </object>
+    </p>
+</FORM>
+</BODY>
+</HTML>
