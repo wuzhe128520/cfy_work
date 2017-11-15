@@ -3,41 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <title>将图片转换为canvas</title>
+    <!--[if IE]><script type="text/javascript" src="assert/js/ExplorerCanvas-master/excanvas.js"></script><![endif]-->
+    <script>
+        // 把image 转换为 canvas对象
+        function convertImageToCanvas(originImgId, canvasId, imgLoadedFn) {
+
+            // 创建canvas DOM元素，并设置其宽高和图片一样
+            var text = document.createTextNode('您的浏览器不支持canvas,请升级您的浏览器!');
+                 imageObj = new Image(),
+                 copyedImg = document.getElementById(originImgId),
+                 canvas = document.getElementById(canvasId);
+
+            imageObj.src = copyedImg.getAttribute('src');
+            imageObj.onload = function() {
+
+                canvas.width = imageObj.width;
+                canvas.height = imageObj.height;
+                canvas.appendChild(text);
+
+                // 坐标(0,0) 表示从此处开始绘制，相当于偏移。
+                canvas.getContext("2d").drawImage(imageObj, 0, 0);
+                imgLoadedFn&&imgLoadedFn();
+            };
+        }
+
+        //获取base64类型的图像信息
+        function getBase64Img(canvasId) {
+            var canvasObj = document.getElementById(canvasId);
+            return canvasObj.toDataURL();
+        }
+        function formatBase64Str(str){
+            var reg = /^data:.+base64,/;
+            return str.replace(reg,'');
+        }
+        window.onload = function() {
+            var copyBtn = document.getElementById('copyBtn');
+            copyBtn.onclick = function() {
+                convertImageToCanvas("img", "canvas", function(){
+                    var shortBase64 =getBase64Img('canvas').substring(0, 100);
+                    console.log(shortBase64);
+                    console.log(formatBase64Str(shortBase64));
+                });
+            }
+        };
+
+    </script>
 </head>
 <body>
 <img src="img/6.jpg" width="300" height="300" id="img">
 <button id="copyBtn">复制图像</button>
-<div id="canvasWrapper">
+<canvas id="canvas"></canvas>
 
-</div>
-<script>
-    // 把image 转换为 canvas对象
-    function convertImageToCanvas(image) {
-        // 创建canvas DOM元素，并设置其宽高和图片一样
-        var canvas = document.createElement("canvas"),
-             text = document.createTextNode('您的浏览器不支持canvas,请升级您的浏览器!');
-        canvas.width = image.width;
-        canvas.height = image.height;
-        canvas.appendChild(text);
-        // 坐标(0,0) 表示从此处开始绘制，相当于偏移。
-        canvas.getContext("2d").drawImage(image, 0, 0);
-        return canvas;
-    }
 
-    function copyImage(copyedImgId, canvasWrapId) {
-        var imageObj = new Image(),
-            copyedImg = document.getElementById(copyedImgId),
-            canvasWrap = document.getElementById(canvasWrapId),
-            canvas = null;
-
-        imageObj.src = copyedImg.getAttribute('src');
-        canvas = convertImageToCanvas(imageObj);
-        canvasWrap.appendChild(canvas);
-    }
-    copyBtn.onclick = function() {
-        copyImage("img", "canvasWrapper");
-    }
-</script>
 
 </body>
 </html>
