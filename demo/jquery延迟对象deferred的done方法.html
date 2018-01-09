@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>jquery延迟对象deferred的done方法</title>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+</head>
+<body>
+
+<button>Go</button>
+<p>Ready...</p>
+
+<script>
+    /* 3 functions to call when the Deferred object is resolved */
+    function fn1() {
+        //$("p").append(" 1 ");
+        console.log('1');
+    }
+    function fn2() {
+        //$("p").append(" 2 ");
+        console.log('2');
+    }
+    function fn3(n) {
+        //$("p").append(n + " 3 " + n);
+        console.log('3');
+    }
+
+    /* create a deferred object */
+    var dfd = $.Deferred();
+
+    /* add handlers to be called when dfd is resolved */
+    dfd
+    /* .done() can take any number of functions or arrays of functions */
+        .done( [fn1, fn2], fn3, [fn2, fn1] )
+        /* we can chain done methods, too */
+        .done(function(n) {
+            console.log('n:' + n);
+            $("p").append(n + " we're done.");
+        });
+
+    /* resolve the Deferred object when the button is clicked */
+    $("button").bind("click", function() {
+        dfd.resolve("and");//resolve方法的传递的实参会当做done方法的回调函数的形参传递进去
+    });
+</script>
+
+</body>
+</html>
