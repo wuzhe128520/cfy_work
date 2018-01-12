@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>metismenu插件案例</title>
+    <link rel="stylesheet" href="assert/js/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assert/js/metismenu-master/dist/metisMenu.min.css">
+    <style>
+        li {
+            list-style-type: none;
+        }
+    </style>
+</head>
+<body>
+    <ul class="metismenu nav" id="menu">
+        <li>
+            <a href="#"  class="has-arrow">主菜单一</a>
+            <ul>
+                <li><a href="">子菜单1</a></li>
+                <li><a href="">子菜单2</a></li>
+                <li><a href="">子菜单3</a></li>
+            </ul>  
+        </li>
+        <li>
+            <a href="#" class="has-arrow">主菜单二</a>
+            <ul>
+                <li><a href="">子菜单1</a></li>
+                <li><a href="">子菜单2</a></li>
+                <li><a href="">子菜单3</a></li>
+            </ul>
+        </li>
+        <li><a href="#">主菜单三</a></li>
+    </ul>
+    <script src="assert/js/jquery/jquery-3.2.1-slim.js"></script>
+    <script src="assert/js/metismenu-master/dist/metisMenu.js"></script>
+    <script>
+        $('#menu').metisMenu();
+    </script>
+</body>
+</html>
